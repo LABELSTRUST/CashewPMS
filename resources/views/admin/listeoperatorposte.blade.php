@@ -4,7 +4,7 @@
 @section('content')
 
 
-<div style="margin-left: 50px;">
+<div >
 <h4 class="font-weight-bold py-3 mb-0">Agents par poste</h4>
     <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
         <ol class="breadcrumb">
@@ -17,20 +17,20 @@
 
 <div class="row">
     
-    <div class="col-lg-10" style="margin-left: 50px;">
-         <div class="row" style="margin-bottom: 20px;">
-            <div class="col-lg-6">
-                <a href="{{ route('assigner.create') }}" class="btn btn-xl btn-outline-primary">Assigner un poste</a>
+<div class="col-lg-10" >
+         <div class="row d-flex justify-content-between mb-2">
+            <div class="mb-2">
+                <a href="{{ route('assigner.index') }}" class="btn btn-lg btn-outline-info">Assigner un poste</a>
             </div>
-            <div class="col-lg-6" style="display: flex; justify-content: flex-end;">
-                <a href="{{ route('operateur.list') }}" class="btn btn-xl btn-outline-primary">Opérateurs</a>
+            <div class="mb-2">
+                <a href="{{ route('operateur.list') }}" class="btn btn-lg btn-outline-info">Opérateurs</a>
             </div>
          </div>
          <div class="row">
             
-            <div class="container-fluid flex-grow-1 container-p-ycard shadow mb-4">
+            <div class="container-fluid flex-grow-1 container-p-ycard shadow mb-4 pmanager">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Liste des Agents ayants des postes</h6>
+                            <h6 class="m-0 font-weight-bold text-info">Liste des Agents ayants des postes</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -70,7 +70,7 @@
                                               <td>{{ $assign->getLigne->code }}     {{ $assign->getLigne->name }}</td>
                                               <td>{{ $assign->getShift->title }}</td>
                                               <td>
-                                                <a class="btn btn-outline-primary" href="">Changer de poste</a>
+                                                <a class="btn btn-outline-info" href="">Changer de poste</a>
                                               </td>
                                               <!--td>$320,800</td-->
                                           </tr>
@@ -85,4 +85,11 @@
     </div>
 </div>
 
+@endsection
+
+
+@section('javascript')
+<script src="{{ asset('asset/js/demo/datatables-demo.js')}}"></script>
+<script src="{{ asset('asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 @endsection

@@ -20,7 +20,8 @@ class Assigner extends Model
         'date_start',
         'date_end',
         'author_id',
-        'shift_id'
+        'shift_id',
+        'sequence_id'
     ];
     
 
@@ -41,6 +42,10 @@ class Assigner extends Model
     public function getShift()
     {
         return  $this->belongsTo(Shift::class,'shift_id');
+    }
+    public function getSequence()
+    {
+        return  $this->belongsTo(Sequence::class,'sequence_id');
     }
 }
 

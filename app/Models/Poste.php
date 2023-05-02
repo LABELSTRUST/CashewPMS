@@ -14,6 +14,13 @@ class Poste extends Model
     public $incrementing = true;
 
     protected $fillable=[
-        'title'
+        'title',
+        'section_id'
     ];
+    
+    public function getSection()
+    {
+        return  $this->belongsTo(Section::class,'section_id');
+    }
+
 }

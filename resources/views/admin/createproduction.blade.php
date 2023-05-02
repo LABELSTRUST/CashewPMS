@@ -21,6 +21,21 @@
         </button>
     </div>
 @endif
+
+
+@if(session()->has('errors'))
+  <div class="alert alert-dark-danger alert-dismissible fade show"  >
+      <button type="button" class="close" data-dismiss="alert" >x</button>
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
+
 <div class="card o-hidden border-0 mt-5 shadow-lg my-5">
             <div class="card-body  p-0">
                 <!-- Nested Row within Card Body -->
@@ -41,11 +56,11 @@ produit_id</div-->
                                     @csrf
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" name="cycle" class="form-control " id="cycle"
+                                        <input type="text" name="cycle" required class="form-control " id="cycle"
                                             placeholder="cycle">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="datetime-local" name="time_open" class="form-control " id="exampleLastName"
+                                        <input type="datetime-local" required name="time_open" class="form-control " id="exampleLastName"
                                             placeholder="Début">
                                     </div>
                                 </div>

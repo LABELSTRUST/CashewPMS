@@ -1,0 +1,56 @@
+
+  fieldset{
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+  }
+  .mytextarea{
+    border: 1px solid #ced4da;
+    border-radius: 1px;
+  }
+  .modal-body {
+    max-height: calc(100vh - 210px); /* hauteur maximale de 100% de la fenêtre moins 210px pour la marge */
+    overflow-y: auto; /* ajout de débordement de défilement vertical */
+  }
+  .modal-dialog {
+    width: 90%; /* définit la largeur à 90% de la fenêtre */
+    max-width: 1200px; /* définit la largeur maximale à 1200px */
+  }
+    fieldset{
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      margin-bottom: 0.5rem;
+      padding: 0.5rem;
+    }
+    .mytextarea{
+      border: 1px solid #ced4da;
+      border-radius: 1px;
+    }
+    .modal-body {
+    max-height: calc(100vh - 210px); /* hauteur maximale de 100% de la fenêtre moins 210px pour la marge */
+    overflow-y: auto; /* ajout de débordement de défilement vertical */
+  }
+  .modal-dialog {
+    width: 90%; /* définit la largeur à 90% de la fenêtre */
+    max-width: 1200px; /* définit la largeur maximale à 1200px */
+  }
+  .form-control{
+    border: 1px solid rgba(24, 28, 33, 0.1) !important;
+    padding: 1px;
+  }
+  input::-webkit-input-placeholder {
+    text-indent: 10px !important;
+  }
+
+  input::-moz-placeholder {
+    text-indent: 10px !important;
+  }
+
+  input::-ms-input-placeholder {
+    text-indent: 10px !important;
+  }
+  input {
+    height: 2em !important;
+    border-radius: 0.9em !important;
+  }

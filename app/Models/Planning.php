@@ -35,10 +35,6 @@ class Planning extends Model
         return  $this->belongsTo(Ligne::class,'ligne_id');
     }
 
-    public function getSequence()
-    {
-        return  $this->hasMany(Sequence::class);
-    }
 }
 /**commande_id
 shift_id

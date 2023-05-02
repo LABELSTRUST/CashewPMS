@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Production;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductionController extends Controller
 {
@@ -15,11 +16,14 @@ class ProductionController extends Controller
      */
     public function index()
     {
+        if( Auth::check()){
         $result = $this->verifyAdmin();
         if($result){
             $shifts = Production::get();
             return view('admin.shift',compact('shifts'));
             
+        }else return redirect('login');
+    
         }else return redirect('login');
     }
 
@@ -40,10 +44,13 @@ class ProductionController extends Controller
      */
     public function create($produit = null )
     {
+        if( Auth::check()){
         $user=$this->verifyAdmin();
         if ($user) {
             return view('admin.createproduction');
-        }
+        }return redirect('login'); 
+    
+        }else return redirect('login');
     }
 
     /**
@@ -55,6 +62,7 @@ class ProductionController extends Controller
      */
     public function store(Request $request, User $user )
     {
+        if( Auth::check()){
         $user=$this->verifyAdmin();
         if ($user) {
             $request->validate([
@@ -65,7 +73,7 @@ class ProductionController extends Controller
                 
             ]);
             
-        //'author_id' date_start
+            //'author_id' date_start
             $data = $request->all();
             $exist = Production::where('user_id',$user)->
                                 where('ligne_id',$data['ligne_id'])->
@@ -86,7 +94,9 @@ class ProductionController extends Controller
                 }
             }
 
-        }
+        }return redirect('login'); 
+    
+        }else return redirect('login');
     }
 
     /**

@@ -4,12 +4,12 @@
 @section('content')
 
 
-<div style="margin-left: 50px;">
-<h4 class="font-weight-bold py-3 mb-0">Planning</h4>
+<div >
+<h4 class="font-weight-bold py-3 mb-0">Planification</h4>
     <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
-            <li class="breadcrumb-item"><a href="#">Planning</a></li>
+            <li class="breadcrumb-item"><a href="#">Planification</a></li>
             <li class="breadcrumb-item active">Liste</li>
         </ol>
     </div>
@@ -17,32 +17,31 @@
 
 <div class="row">
     
-    <div class="col-lg-10" style="margin-left: 50px;">
-         <div class="row" style="margin-bottom: 20px;">
-            <div class="col-lg-6">
-                <a href="{{ route('plannings.create') }}" class="btn btn-xl btn-outline-primary">Créer un plannig</a>
+    <div class="col-lg-10" >
+         <div class="row d-flex justify-content-between mb-2">
+            <div class="mb-2">
             </div>
-            <div class="col-lg-6" style="display: flex; justify-content: flex-end;">
-                <a href="{{ route('sequence.index') }}" class="btn btn-xl btn-outline-primary">Séquence</a>
+            <div class="mb-2" >
+                <a href="{{ route('sequence.index') }}" class="btn btn-lg btn-outline-info">Séquence</a>
             </div>
          </div>
          <div class="row">
             
-         <div class="container-fluid flex-grow-1 container-p-ycard shadow mb-4">
+         <div class="container-fluid flex-grow-1 container-p-ycard shadow mb-4 pmanager">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Liste des Plannings</h6>
+                            <h6 class="m-0 font-weight-bold text-info">Liste des Objectifs</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
+                                    <thead class="thead-light">
                                         <tr>
                                             <th>#</th>
+                                            <th>Id Target</th>
+                                            <th>Période</th>
+                                            <th>Quantité</th>
                                             <th>Produit</th>
-                                            <th>Ligne</th>
-                                            <th>Commande Quantité</th>
-                                            <th>Shift</th>
-                                            <th>Date</th>
+                                            <th>Quantité restante</th>
                                             <th>Action</th>
                                             <!--th>Salary</th-->
                                         </tr>
@@ -50,32 +49,46 @@
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
+                                            <th>Id Target</th>
+                                            <th>Période</th>
+                                            <th>Quantité</th>
                                             <th>Produit</th>
-                                            <th>Ligne</th>
-                                            <th>Commande Quantité</th>
-                                            <th>Shift</th>
-                                            <th>Date</th>
+                                            <th>Quantité restante</th>
                                             <th>Action</th>
                                             <!--th>Salary</th-->
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                      @foreach ($plannigs as $plannig)
-                                          <tr>
-
-                                              <td>{{ $plannig->id }}</td>
-                                              <td>{{ $plannig->getCommande->getProduit->code_prod }} {{ $plannig->getCommande->getProduit->name }}</td>
-                                              <td>{{ $plannig->getLigne->code }} {{ $plannig->getLigne->name }}</td>
-                                              <td>{{ $plannig->getCommande->quantity }}</td>
-                                              <td>{{ $plannig->getShift->title }}</td>
-                                              <td>{{ $plannig->created_at }}</td>
-                                              <td>
-                                                <a class="btn btn-outline-primary" href="{{ route('planning.edit',[$plannig->id]) }}">Modifier</a>
-                                                <a class="btn btn-outline-primary" href="{{ route('planning.sequenceadd',[$plannig->id]) }}">Ajouter une séquence</a>
-                                              </td>
-                                              <!--td>$320,800</td-->
-                                          </tr>
-                                      @endforeach
+                                        @foreach($objectifs as $objectif)
+                                            
+                                            
+                                            <tr>
+                                                <td>{{ $objectif->id }}</td>
+                                                <td>{{ $objectif->id_target }}</td>
+                                                <td>{{ $objectif->formatted_date}}</td>
+                                                <td>{{ $objectif->qte_totale }}  {{$objectif->unit_measure}}</td>
+                                                <td>{{ $objectif->getProduit->name }}</td>
+                                                
+                                                <td> 
+                                                    @if($objectif->obj_remain_quantity)
+                                                        {{$objectif->obj_remain_quantity}}  {{$objectif->unit_measure}}
+                                                    @elseif($objectif->obj_remain_quantity==0)
+                                                        {{$objectif->obj_remain_quantity}}  {{$objectif->unit_measure}}
+                                                    @else
+                                                        {{$objectif->qte_totale}} {{$objectif->unit_measure}}
+                                                    @endif
+                                                    
+                                                </td>
+                                                <td>
+                                                    @if($objectif->obj_remain_quantity==0)
+                                                        <button class="btn btn-primary">FAIT</button>
+                                                    @else
+                                                        <a class="btn btn-outline-info" href="{{ route('plannifier',[$objectif->id]) }}">Plannifier</a>
+                                                    @endif
+                                                </td>
+                                                
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                   
                                 </table>
@@ -86,4 +99,10 @@
     </div>
 </div>
 
+@endsection
+
+@section('javascript')
+<script src="{{ asset('asset/js/demo/datatables-demo.js')}}"></script>
+<script src="{{ asset('asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 @endsection

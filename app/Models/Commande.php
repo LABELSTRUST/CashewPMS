@@ -19,6 +19,7 @@ class Commande extends Model
         'client_id',
         'statut',
         'code',
+        'id_order'
     ];
 
     

@@ -19,12 +19,31 @@ class Sequence extends Model
         'date_end',
         'quantity_do',
         'code',
-        'planning_id'
+        'planning_id',
+        'ligne_id',
+        'objectif_id',
+        'remain_quantity',
+        'shift_id',
+        'author_id'
     ];
 
     public function planning()
     {
         return $this->belongsTo(Planning::class,'planning_id');
+    }
+
+    
+    public function getShift()
+    {
+        return  $this->belongsTo(Shift::class,'shift_id');
+    }
+    public function getLigne()
+    {
+        return  $this->belongsTo(Ligne::class,'ligne_id');
+    }
+    public function getObjectif()
+    {
+        return  $this->belongsTo(Objectif::class,'objectif_id');
     }
 
 }/**quantity

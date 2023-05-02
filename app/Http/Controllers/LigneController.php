@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Models\Ligne;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LigneController extends Controller
 {
@@ -15,12 +16,15 @@ class LigneController extends Controller
      */
     public function index()
     {
+        if( Auth::check()){
         $result = $this->verifyAdmin();
         if($result){
             $lignes = Ligne::get();
             return view('admin.ligne',compact('lignes'));
             
         }else  return redirect('login');
+    
+        }else return redirect('login');
     }
 
     public function verifyAdmin()
@@ -37,10 +41,13 @@ class LigneController extends Controller
      */
     public function create()
     {
-        $user=$this->verifyAdmin();
-        if ($user) {
-            return view('admin.createligne');
-        }
+        if( Auth::check()){
+            $user=$this->verifyAdmin();
+            if ($user) {
+                return view('admin.createligne');
+            }return redirect('login'); 
+    
+        }else return redirect('login');
         
     }
 
@@ -52,29 +59,37 @@ class LigneController extends Controller
      */
     public function store(Request $request)
     {
-        $user=$this->verifyAdmin();
-        if ($user) {
-                
-            $request->validate([
-                'code' => 'required',
-                'name' => 'required',
-            ]);
-            
-            $data = $request->all();
-            $exist = Ligne::where('code',$data['code'])->first();
-            if (isset($exist)) {
-                return redirect('admin/ligne/create')->with('error',"Ce code existe déjà");
-            }else{
-                $ligne = Ligne::create([
-                    'code'=>$data['code'],
-                    'name'=>$data['name']
+        if( Auth::check()){
+            $user=$this->verifyAdmin();
+            if ($user) {
+                    
+                $request->validate([
+                    'code' => 'required',
+                    'name' => 'required',
                 ]);
-                if ($ligne) {
-                    return redirect('admin/ligne/create')->with('message',"Enregistrer avec succès");
-                }else return redirect('admin/ligne/create')->with('error',"Une erreur s'est produite");
-            }
+                
+                $data = $request->all();
+                $exist = Ligne::where('code',$data['code'])->first();
+                if (isset($exist)) {
+                    return redirect('admin/ligne/create')->with('error',"Ce code existe déjà");
+                }else{
+                    $ligne = Ligne::create([
+                        'code'=>$data['code'],
+                        'name'=>$data['name']
+                    ]);
+                    if ($ligne) {
+                        return redirect('admin/ligne/create')->with('message',"Enregistrer avec succès");
+                    }else return redirect('admin/ligne/create')->with('error',"Une erreur s'est produite"); 
+                }
 
-        }
+            }else return redirect('login');
+    
+        }else return redirect('login');
+    }
+
+    public function showShift()
+    {
+        # code...
     }
 
     /**
@@ -85,7 +100,6 @@ class LigneController extends Controller
      */
     public function show(Ligne $ligne)
     {
-        //
     }
 
     /**
@@ -96,7 +110,14 @@ class LigneController extends Controller
      */
     public function edit(Ligne $ligne)
     {
-        //
+        if( Auth::check()){
+            $user=$this->verifyAdmin();
+            if ($user) {
+                return view('admin.createligne',compact('ligne'));
+
+            }return redirect('login'); 
+    
+        }else return redirect('login');
     }
 
     /**
@@ -108,7 +129,29 @@ class LigneController extends Controller
      */
     public function update(Request $request, Ligne $ligne)
     {
-        //
+        if( Auth::check()){
+            $user=$this->verifyAdmin();
+            if ($user) {
+                    
+                $request->validate([
+                    'code' => 'required',
+                    'name' => 'required',
+                ]);
+                
+                $data = $request->all();
+
+                $update = $ligne->update([
+                    'code' =>$data['code'],
+                    'name' =>$data['name'],
+                ]);
+                
+                if ($update) {
+                    return redirect()->route('ligne.edit',[$ligne->id])->with('message',"Modifier avec succès");
+                }else return redirect()->route('ligne.edit',[$ligne->id])->with('error',"Une erreur s'est produite");
+
+            }else return redirect('login');
+    
+        }else return redirect('login');
     }
 
     /**
@@ -119,6 +162,14 @@ class LigneController extends Controller
      */
     public function destroy(Ligne $ligne)
     {
-        //
+        if( Auth::check()){
+            $user=$this->verifyAdmin();
+            if ($user) {
+                
+                $result = $ligne->delete();
+        
+                return redirect()->route('ligne.index')->with('message','Supprimer avec succès');
+            }else return redirect('login');
+        }else return redirect('login');
     }
 }

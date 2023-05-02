@@ -15,6 +15,19 @@
       <strong> {{ session()->get('error')}}</strong>
   </div>
 @endif
+
+@if(session()->has('errors'))
+  <div class="alert alert-dark-danger alert-dismissible fade show"  >
+      <button type="button" class="close" data-dismiss="alert" >x</button>
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 <div style="margin-left: 50px;">
   <h4 class="font-weight-bold py-3 mb-0">Opérateurs</h4>
   <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
@@ -31,8 +44,8 @@
   <div class="col-lg-10" style="margin-left: 50px;">
     
   <div class="row" style="margin-bottom: 20px;">
-            <div class="col-lg-6">
-                <a href="{{ route('operateur.list') }}" class="btn btn-xl btn-outline-primary">Retour</a>
+            <div class="col-lg-6 col-md-6 col-sm-6 ">
+                <a href="{{ route('operateur.list') }}" class="btn btn-lg btn-outline-primary">Retour</a>
             </div>
          </div>
   </div>
@@ -60,17 +73,17 @@
                                     @csrf
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" name="username" class="form-control " id="exampleUsername"
+                                        <input type="text" name="username" required class="form-control " id="exampleUsername"
                                             placeholder="Username">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" name="name" class="form-control " id="exampleLastName"
+                                        <input type="text" name="name" required class="form-control " id="exampleLastName"
                                             placeholder=" Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="email" name="email" class="form-control "
+                                        <input type="email" name="email" required class="form-control "
                                             id="email" placeholder="email">
                                     </div>
                                     <div class="col-sm-6">
@@ -86,7 +99,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" name="password" class="form-control "
+                                        <input type="password" required name="password" class="form-control "
                                             id="exampleInputPassword" placeholder="Password">
                                     </div>
                                     <div class="col-sm-6">

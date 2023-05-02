@@ -16,7 +16,7 @@
   </div>
 @endif
 <div style="margin-left: 50px;">
-  <h4 class="font-weight-bold py-3 mb-0">Plannig</h4>
+  <h4 class="font-weight-bold py-3 mb-0">Planning</h4>
   <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
       <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
@@ -28,16 +28,16 @@
 </div>
 
 <div class="row">
-  <div class="col-lg-10" style="margin-left: 50px;">
+  <div class="col-lg-10" >
     
     <div class="row" style="margin-bottom: 20px;">
         
             <!--div class="col-lg-6">
-                <a href="{{ route('operateur.list') }}" class="btn btn-xl btn-outline-primary">Retour</a>
+                <a href="{{ route('operateur.list') }}" class="btn btn-lg btn-outline-primary">Retour</a>
             </div-->
         
-        <div class="col-lg-6">
-            <a href="{{ route('planning.index') }}" class="btn btn-xl btn-outline-primary">Retour</a>
+        <div class="col-lg-6 col-md-6 col-sm-6 ">
+            <a href="{{ route('planning.index') }}" class="btn btn-lg btn-outline-primary">Retour</a>
         </div>
     </div>
   </div>

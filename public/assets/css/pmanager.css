@@ -1,0 +1,26 @@
+
+.scroll ::-webkit-scrollbar{
+    width: 5px;
+    background-color: gray; 
+
+}
+
+.body{
+    background-color: #0f5ca6;
+}
+.sidenav.logo-dark .app-brand {
+    background-color: #0f5ca6 !important; 
+}
+.navbar.bg-dark{
+    background-color: #0f5ca6 !important; 
+}
+.table{
+    background-color: white;
+}
+.pmanager{
+    background-color: white !important; 
+}
+.page-item.active .page-link{
+    background-color: #55a3f4 !important;
+    border-color: #55a3f4 !important;
+}

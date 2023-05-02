@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Shift;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShiftController extends Controller
 {
@@ -40,7 +41,7 @@ class ShiftController extends Controller
         $user=$this->verifyAdmin();
         if ($user) {
             return view('admin.createshift');
-        }
+        }return redirect('login'); 
     }
 
     /**
@@ -51,6 +52,7 @@ class ShiftController extends Controller
      */
     public function store(Request $request)
     {
+        if( Auth::check()){
         $user=$this->verifyAdmin();
         if ($user) {
             $request->validate([
@@ -75,7 +77,9 @@ class ShiftController extends Controller
                 }
             }
 
-        }
+        }return redirect('login'); 
+    
+        }else return redirect('login');
     }
 
     /**
@@ -97,7 +101,14 @@ class ShiftController extends Controller
      */
     public function edit(Shift $shift)
     {
-        //
+        if( Auth::check()){
+            $user=$this->verifyAdmin();
+            if ($user) {
+                return view('admin.createshift',compact('shift'));
+
+            }return redirect('login'); 
+    
+        }else return redirect('login');
     }
 
     /**
@@ -109,7 +120,31 @@ class ShiftController extends Controller
      */
     public function update(Request $request, Shift $shift)
     {
-        //
+        if( Auth::check()){
+            $user=$this->verifyAdmin();
+            if ($user) {
+                    
+                $request->validate([
+                    'title' => 'required',
+                    'time_open' => 'required',
+                    'time_close' => 'required',
+                ]);
+                
+                $data = $request->all();
+
+                $update = $shift->update([
+                    'title' => $data['title'], 
+                    'time_open' => $data['time_open'],
+                    'time_close' => $data['time_close'],
+                ]);
+                
+                if ($update) {
+                    return redirect()->route('shift.edit',[$shift->id])->with('message',"Modifier avec succès");
+                }else return redirect()->route('shift.edit',[$shift->id])->with('error',"Une erreur s'est produite");
+
+            }else return redirect('login');
+    
+        }else return redirect('login');
     }
 
     /**
@@ -120,6 +155,14 @@ class ShiftController extends Controller
      */
     public function destroy(Shift $shift)
     {
-        //
+        if( Auth::check()){
+            $user=$this->verifyAdmin();
+            if ($user) {
+                
+                $result = $shift->delete();
+        
+                return redirect()->route('shift.index')->with('message','Supprimer avec succès');
+            }else return redirect('login');
+        }else return redirect('login');
     }
 }

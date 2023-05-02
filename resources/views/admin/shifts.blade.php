@@ -3,8 +3,20 @@
 
 @section('content')
 
+@if(session()->has('message'))
+<div class="alert alert-dark-success alert-dismissible fade show"  >
+    <button type="button" class="close" data-dismiss="alert" >x</button>
+    <strong> {{ session()->get('message')}}</strong>
+</div>
+@endif
+@if(session()->has('error'))
+  <div class="alert alert-dark-danger alert-dismissible fade show"  >
+      <button type="button" class="close" data-dismiss="alert" >x</button>
+      <strong> {{ session()->get('error')}}</strong>
+  </div>
+@endif
 
-<div style="margin-left: 50px;">
+<div >
 <h4 class="font-weight-bold py-3 mb-0">Shifts</h4>
     <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
         <ol class="breadcrumb">
@@ -17,23 +29,24 @@
 
 <div class="row">
     
-    <div class="col-lg-10" style="margin-left: 50px;">
-         <div class="row" style="margin-bottom: 20px;">
-            <div class="col-lg-6">
-                <a href="{{ route('ligne.index') }}" class="btn btn-xl btn-outline-primary">Gestion des Lignes</a>
+    <div class="col-lg-10" >
+         <div class="row d-flex justify-content-between mb-2">
+            <div class="mb-2">
+                <a href="{{ route('ligne.index') }}" class="btn btn-lg btn-outline-info">Gestion des Lignes</a>
             </div>
-            <div class="col-lg-6" style="display: flex; justify-content: flex-end;">
-                <a href="{{ route('shift.create') }}" class="btn btn-xl btn-outline-primary">Ajouter Shift</a>
+            <div class="mb-2" >
+                <a href="{{ route('shift.create') }}" class="btn btn-lg btn-outline-info">Ajouter Shift</a>
             </div>
          </div>
          <div class="row">
             
-         <div class="container-fluid flex-grow-1 container-p-ycard shadow mb-4">
+         <div class="container-fluid flex-grow-1 container-p-ycard shadow mb-4 pmanager">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Liste des Shifts</h6>
+                            <h6 class="m-0 font-weight-bold text-info">Liste des Shifts</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+                                
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead class="thead-light">
                                         <tr>
@@ -42,6 +55,7 @@
                                             <th>Ouverture</th>
                                             <th>Fermeture</th>
                                             <th>Action</th>
+                                            <!--th>Action</th-->
                                             <!--th>Salary</th-->
                                         </tr>
                                     </thead>
@@ -52,6 +66,7 @@
                                             <th>Ouverture</th>
                                             <th>Fermeture</th>
                                             <th>Action</th>
+                                            <!--th>Action</th-->
                                             <!--th>Salary</th-->
                                         </tr>
                                     </tfoot>
@@ -63,10 +78,22 @@
                                                 <td>{{ $shift->title }}</td>
                                                 <td>{{ $shift->time_open }}</td>
                                                 <td>{{ $shift->time_close }}</td>
-                                                <td style=" width: 25%;">
-                                                    <a class="btn btn-outline-primary" href="">Modifier</a>
-                                                    <a class="btn btn-outline-primary" href="">Modifier</a>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-info">Action</button>
+                                                        <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <span class="sr-only">Toggle Dropdown</span>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" href="{{ route('shift.edit',[$shift->id] ) }}">Modifier</a>
+                                                            <a class="dropdown-item" onclick="return  confirm('Voulez vous supprimer ce shift?')" href="{{ route('shift.destroy',[$shift->id]) }}">Supprimer</a>
+                                                        </div>
+                                                    </div>
                                                 </td>
+                                                <!--td style=" width: 25%;">
+                                                    <a class="btn btn-outline-info" href="">Modifier</a>
+                                                    <a class="btn btn-outline-info" href="">Modifier</a>
+                                                </td-->
                                               <!--td>$320,800</td-->
                                           </tr>
                                       @endforeach
@@ -80,4 +107,10 @@
     </div>
 </div>
 
+@endsection
+
+@section('javascript')
+<script src="{{ asset('asset/js/demo/datatables-demo.js')}}"></script>
+<script src="{{ asset('asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{ asset('asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 @endsection

@@ -21,17 +21,23 @@
         </button>
     </div>
 @endif
+
+
+@if(session()->has('errors'))
+  <div class="alert alert-dark-danger alert-dismissible fade show"  >
+      <button type="button" class="close" data-dismiss="alert" >x</button>
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <div class="card o-hidden border-0 mt-5 shadow-lg my-5">
             <div class="card-body  p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
                     <div class="col-lg-2"></div>
-                    
-                    <!--div class="col-lg-5 d-none d-lg-block bg-register-image">cycle
-user_id
-ligne_id
-shift_id
-produit_id</div-->
                     <div class="col-lg-8" >
                         <div class="p-5">
                             <div class="text-center">
@@ -43,18 +49,18 @@ produit_id</div-->
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <label for="">Date début</label>
-                                    <input type="datetime-local" name="date_start" class="form-control "
+                                    <input type="datetime-local" required name="date_start" class="form-control "
                                             id="date_start" placeholder="Date début">
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="">Date fin</label>
-                                    <input type="datetime-local" name="date_end" class="form-control "
+                                    <input type="datetime-local" required name="date_end" class="form-control "
                                             id="date_end" placeholder="Date fin">
                                 </div>
                             </div>
                             <div class="form-group row">
                               <div class="col-sm-6 mb-3 mb-sm-0">
-                                <input type="number" name="quantity" class="form-control "
+                                <input type="number" required name="quantity" class="form-control "
                                         id="quantity" placeholder="Quantité attendue">
                               </div>
                               

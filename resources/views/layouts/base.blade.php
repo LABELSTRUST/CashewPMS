@@ -3,7 +3,7 @@
 <html lang="en" class="material-style layout-fixed">
 
 <head>
-    <title>P-Manager </title>
+    <title>CashewPMS</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -11,7 +11,7 @@
     <meta name="description" content="Empire Bootstrap admin template made using Bootstrap 4, it has tons of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
     <meta name="keywords" content="Empire, bootstrap admin template, bootstrap admin panel, bootstrap 4 admin template, admin template">
     <meta name="author" content="Srthemesvilla" />
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.ico')}}">
+    <link rel="icon" type="image/x-icon"  href="{{ asset('assets/img/cashew.jpeg')}}">
 
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
@@ -34,10 +34,14 @@
     <!-- Libs -->
     <link rel="stylesheet" href="{{ asset('assets/libs/perfect-scrollbar/perfect-scrollbar.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/libs/flot/flot.css')}}">
+    
+    <link rel="stylesheet" href="{{ asset('assets/css/pmanager.css')}}">
+    @yield('css')
+    @yield('js')
 
 </head>
 
-<body>
+<body style="background-color: #ffebad !important;">
     <!-- [ Preloader ] Start -->
     <div class="page-loader">
         <div class="bg-primary"></div>
@@ -50,11 +54,12 @@
             <!-- [ Layout sidenav ] Start -->
             <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-white logo-dark">
                 <!-- Brand demo (see assets/css/demo/demo.css) -->
-                <div class="app-brand demo">
+                <div class="app-brand demo " >
                     <span class="app-brand-logo demo">
-                        <img src="{{ asset('assets/img/logo.png')}}" alt="Brand Logo" class="img-fluid">
+                        <img src="{{ asset('assets/img/logo_label.png')}}" alt="Brand Logo" style="height:35px;">
+                        <!--img src="{{ asset('assets/img/logo.png')}}" alt="Brand Logo" class="img-fluid"-->
                     </span>
-                    <a href="{{ route('dashboard') }}" class="app-brand-text demo sidenav-text font-weight-normal ml-2">Empire</a>
+                    <a href="{{ route('dashboard') }}" class="app-brand-text demo sidenav-text font-weight-normal ml-2">CashewPMS</a>
                     <a href="javascript:" class="layout-sidenav-toggle sidenav-link text-large ml-auto">
                         <i class="ion ion-md-menu align-middle"></i>
                     </a>
@@ -76,10 +81,11 @@
                     </li>
 
                     <!-- Layouts -->
+       
                     
-        @if(Auth::user()->getRole->name === "Admin")
+                @if(Auth::check() && Auth::user()->getRole?->name === "Admin")
                     <li class="sidenav-divider mb-1"></li>
-                    <li class="sidenav-header small font-weight-semibold">Configuration</li>
+                    <!--li class="sidenav-header small font-weight-semibold">Configuration</li-->
                     <!--li class="sidenav-item">
                         <a href="" class="sidenav-link">
                             <i class="sidenav-icon feather icon-type"></i>
@@ -90,83 +96,59 @@
                     <!-- UI elements -->
                     <li class="sidenav-item">
                         <a href="" class="sidenav-link sidenav-toggle">
-                            <i class="sidenav-icon feather icon-box"></i>
-                            <div>Lignes</div>
+                            <i class="sidenav-icon feather icon-settings"></i>
+                            <div>Configuration</div>
                         </a>
                         <ul class="sidenav-menu">
                             <li class="sidenav-item">
                                 <a href="{{ route('ligne.index') }}" class="sidenav-link">
-                                    <div>Liste</div>
+                                    <div>Lignes</div>
                                 </a>
                             </li>
-                            <li class="sidenav-item">
-                                <a href="{{ route('ligne.create') }}" class="sidenav-link">
-                                    <div>Créer</div>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li class="sidenav-item">
-                        <a href="javascript:" class="sidenav-link sidenav-toggle">
-                            <i class="sidenav-icon feather icon-box"></i>
-                            <div>Shifts</div>
-                        </a>
-                        <ul class="sidenav-menu">
                             <li class="sidenav-item">
                                 <a href="{{ route('shift.index') }}" class="sidenav-link">
-                                    <div>Liste</div>
+                                    <div>Shifts</div>
                                 </a>
                             </li>
                             <li class="sidenav-item">
-                                <a href="{{ route('shift.create') }}" class="sidenav-link">
-                                    <div>Créer</div>
+                                <a href="{{ route('produit.index') }}" class="sidenav-link">
+                                    <div>Produits</div>
                                 </a>
                             </li>
 
                         </ul>
                     </li>
-
                     <!-- Forms & Tables -->
                     <li class="sidenav-divider mb-1"></li>
-                    <li class="sidenav-header small font-weight-semibold">Planning</li>
+                    <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
                     <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
-                            <i class="sidenav-icon feather icon-clipboard"></i>
-                            <div>Plannification</div>
+                            {{-- <i class="sidenav-icon lnr lnr-hourglass"></i> --}} 
+                            <div style="margin-right: 0.80rem;">
+                                <img   style="width: 18px;" class="" src="{{ asset('assets/flaticon/plan.png')}}" alt="">
+                            </div>
+                            <div>Planning</div>
                         </a>
                         <ul class="sidenav-menu">
                             <li class="sidenav-item">
-                                <a href="forms_layouts.html" class="sidenav-link">
-                                    <div>Liste</div>
+                                <a href="{{ route('objectif.index') }}" class="sidenav-link">
+                                    <div>Objectifs</div>
                                 </a>
                             </li>
                             <li class="sidenav-item">
-                                <a href="forms_input-groups.html" class="sidenav-link">
-                                    <div>Créer</div>
+                                <a href="{{ route('planning.index') }}" class="sidenav-link">
+                                    <div>Planifications</div>
+                                </a>
+                            </li>
+                            
+                            <li class="sidenav-item">
+                                <a href="{{ route('sequence.index') }}" class="sidenav-link">
+                                    <div>Séquences</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
                     
-                    <li class="sidenav-item">
-                        <a href="javascript:" class="sidenav-link sidenav-toggle">
-                            <i class="sidenav-icon feather icon-clipboard"></i>
-                            <div>Séquence</div>
-                        </a>
-                        <ul class="sidenav-menu">
-                            <li class="sidenav-item">
-                                <a href="{{ route('sequence.index') }}" class="sidenav-link">
-                                    <div>Liste</div>
-                                </a>
-                            </li>
-                            <li class="sidenav-item">
-                                <a href="{{ route('sequence.create') }}" class="sidenav-link">
-                                    <div>Créer</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                     <!--li class="sidenav-item">
                         <a href="tables_bootstrap.html" class="sidenav-link">
                             <i class="sidenav-icon feather icon-grid"></i>
@@ -174,52 +156,631 @@
                         </a>
                     </li-->
 
-                    <!--  Icons -->
                     <li class="sidenav-divider mb-1"></li>
-                    <li class="sidenav-header small font-weight-semibold">Icons</li>
+                    <!--li class="sidenav-header small font-weight-semibold">Collaborateurs</li-->
                     <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
-                            <i class="sidenav-icon feather icon-feather"></i>
-                            <div>Icons</div>
+                            <i class="sidenav-icon lnr lnr-users"></i>
+                            <div>Collaborateurs</div>
                         </a>
                         <ul class="sidenav-menu">
                             <li class="sidenav-item">
-                                <a href="icons_feather.html" class="sidenav-link">
-                                    <div>Feather</div>
+                                <a href="{{ route('poste.index') }}" class="sidenav-link">
+                                    <div>Postes</div>
                                 </a>
                             </li>
                             <li class="sidenav-item">
-                                <a href="icons_linearicons.html" class="sidenav-link">
-                                    <div>Linearicons</div>
+                                <a href="{{ route('operateur.list') }}" class="sidenav-link">
+                                    <div>Opérateurs</div>
+                                </a>
+                            </li>
+                            <li class="sidenav-item">
+                                <a href="{{ route('assigner.index') }}" class="sidenav-link">
+                                    <div>Assignations</div>
                                 </a>
                             </li>
                         </ul>
                     </li>
 
+                    <li class="sidenav-divider mb-1"></li>
+                    <!--li class="sidenav-header small font-weight-semibold">Données</li-->
+                    <li class="sidenav-item">
+                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <i class="sidenav-icon lnr lnr-pie-chart"></i>
+                            <div>Données</div>
+                        </a>
+                        <ul class="sidenav-menu">
+                            <li class="sidenav-item">
+                                <a href="#" class="sidenav-link">
+                                    <div>Stocks</div>
+                                </a>
+                            </li>
+                            <li class="sidenav-item">
+                                <a href="#" class="sidenav-link">
+                                    <div>Productions</div>
+                                </a>
+                            </li>
+                            <li class="sidenav-item">
+                                <a href="#" class="sidenav-link">
+                                    <div>Statistiques</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--  Icons -->
+
+                    
+
                     <!-- Pages -->
                     <li class="sidenav-divider mb-1"></li>
-                    <li class="sidenav-header small font-weight-semibold">Pages</li>
-                    <li class="sidenav-item">
-                        <a href="pages_authentication_login-v1.html" class="sidenav-link">
-                            <i class="sidenav-icon feather icon-lock"></i>
-                            <div>Login</div>
+                    <li class="sidenav-header small font-weight-semibold"></li>
+                    <!--li class="sidenav-item">
+                        <a href="{{ route('operateur.list') }}" class="sidenav-link">
+                            <i class="sidenav-icon lnr lnr-users"></i>
+                            <div>Liste</div>
                         </a>
                     </li>
                     <li class="sidenav-item">
-                        <a href="pages_authentication_register-v1.html" class="sidenav-link">
+                        <a href="{{ route('create.operator') }}" class="sidenav-link">
                             <i class="sidenav-icon feather icon-user"></i>
-                            <div>Signup</div>
+                            <div>Créer</div>
                         </a>
-                    </li>
-                    <li class="sidenav-item">
-                        <a href="pages_faq.html" class="sidenav-link">
+                    </li-->
+                    {{-- <li class="sidenav-item">
+                        <a href="#" class="sidenav-link">
                             <i class="sidenav-icon feather icon-anchor"></i>
                             <div>FAQ</div>
                         </a>
+                    </li>  --}}
+                    
+                @elseif(Auth::check() && Auth::user()->getRole?->name === "Magasinier")
+                    
+                    
+                    <li class="sidenav-divider mb-1"></li>
+                    <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
+                    <li class="sidenav-item">
+                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                            </div>
+                            <div>Partenaires</div>
+                        </a>
+                        <ul class="sidenav-menu">
+                            <li class="sidenav-item">
+                                <a href="{{ route('client.index') }}" class="sidenav-link">
+                                    <div>Client</div>
+                                </a>
+                            </li>
+                            
+                            <li class="sidenav-item">
+                                <a href="{{ route('supplier.index') }}" class="sidenav-link">
+                                    <div>Fournisseur</div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
+
+                        <li class="sidenav-divider mb-1"></li>
+                        <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
+                        <li class="sidenav-item">
+                            <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 20px;"  src="{{ asset('assets/inventaire/reception.png')}}" alt="">
+                            </div>
+                                <div>Réception</div>
+                            </a>
+                            <ul class="sidenav-menu">
+                                <li class="sidenav-item">
+                                    <a href="{{ route('matiere.listeMatiere') }}" class="sidenav-link">
+                                        <div>Entrée</div>
+                                    </a>
+                                </li>
+                                <li class="sidenav-item">
+                                    <a href="{{ route('inventaire.index') }}" class="sidenav-link">
+                                        <div>Stock </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidenav-divider mb-1"></li>
+                            <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
+                            <li class="sidenav-item">
+                                <a href="javascript:" class="sidenav-link sidenav-toggle">
+                                    <div style="margin-right: 0.80rem;">
+                                        <img style="width: 25px;"  src="{{ asset('assets/inventaire/expedition.png')}}" alt="">
+                                    </div>
+                                    <div>Expédition</div>
+                                </a>
+                                <ul class="sidenav-menu">
+                                    <li class="sidenav-item">
+                                        <a href="{{ route('reception.dispatchs') }}" class="sidenav-link">
+                                            <div>Stock</div>
+                                        </a>
+                                    </li>
+                                    
+                                    <li class="sidenav-item">
+                                        <a href="{{ route('reception.liste_sortie') }}" class="sidenav-link">
+                                            <div>Sortie</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                        </li>
+                    
+                    {{-- <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-item">
+                        <a href="{{ route('produit_fini_index') }}" class="sidenav-link">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 25px;"  src="{{ asset('assets/flaticon/product.png')}}" alt="">
+                            </div>
+                            <div>Produits finis</div>
+                        </a>
+                    </li>  --}}
+                @elseif(Auth::check() && Auth::user()->getRole?->name === "Operateur")
+                    @if (isset($etape_fragilisation))
+                    <li class="sidenav-divider mb-1"></li>
+                    <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
+                    <li class="sidenav-item">
+                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <i class="sidenav-icon feather icon-settings"></i>
+                            <div>Configuration</div>
+                        </a>
+                        <ul class="sidenav-menu">
+                            <li class="sidenav-item">
+                                <a href="{{ route('cuiseur.create') }}" class="sidenav-link">
+                                    <div>Autoclaves</div>
+                                </a>
+                            </li>
+                            <li class="sidenav-item">
+                                <a href="{{ route('sequence.operateurSequence') }}" class="sidenav-link">
+                                    <div>Séquences</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-item">
+                        <a href="{{route('fragilisation.rapport')}}" class="sidenav-link">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 18px;"  src="{{ asset('assets/production/rapport.png')}}" alt="">
+                            </div>
+                            <div>Rapports</div>
+                        </a>
+                    </li> 
+                    @endif
+                    @if (isset($etape_calibrage))
+                        
+                
+                        <li class="sidenav-divider mb-1"></li>
+                        <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
+                        <li class="sidenav-item">
+                            <a href="javascript:" class="sidenav-link sidenav-toggle">
+                                <i class="sidenav-icon feather icon-settings"></i>
+                                <div>Configuration</div>
+                            </a>
+                            <ul class="sidenav-menu">
+                                <li class="sidenav-item">
+                                    <a href="{{ route('calibrage.listetype') }}" class="sidenav-link">
+                                        <div>Calibre</div>
+                                    </a>
+                                </li>
+                                <li class="sidenav-item">
+                                    <a href="{{ route('calibrage.graderindex') }}" class="sidenav-link">
+                                        <div>Calibreuse</div>
+                                    </a>
+                                </li>
+                                <li class="sidenav-item">
+                                    <a href="{{ route('sequence.operateurSequence') }}" class="sidenav-link">
+                                        <div>Séquences</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                
+                        <li class="sidenav-divider mb-1"></li>
+                        <li class="sidenav-item">
+                            <a href="{{route('calibrage.rapport')}}" class="sidenav-link">
+                                <div style="margin-right: 0.80rem;">
+                                    <img style="width: 18px;"  src="{{ asset('assets/production/rapport.png')}}" alt="">
+                                </div>
+                                <div>Rapports</div>
+                            </a>
+                        </li> 
+                    @endif
+                    @if (isset($etape_cooling))
+                        
+                
+                        <li class="sidenav-divider mb-1"></li>
+                        <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
+                        <li class="sidenav-item">
+                            <a href="javascript:" class="sidenav-link sidenav-toggle">
+                                <i class="sidenav-icon feather icon-settings"></i>
+                                <div>Configuration</div>
+                            </a>
+                            <ul class="sidenav-menu">
+                                <li class="sidenav-item">
+                                    <a href="{{ route('sequence.operateurSequence') }}" class="sidenav-link">
+                                        <div>Séquences</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                
+                        <li class="sidenav-divider mb-1"></li>
+                        <li class="sidenav-item">
+                            <a href="{{route('cooling.rapport')}}" class="sidenav-link">
+                                <div style="margin-right: 0.80rem;">
+                                    <img style="width: 18px;"  src="{{ asset('assets/production/rapport.png')}}" alt="">
+                                </div>
+                                <div>Rapports</div>
+                            </a>
+                        </li> 
+                        
+                    @endif
+                    @if (isset($etape_shelling))
+                        
+                
+                        <li class="sidenav-divider mb-1"></li>
+                        <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
+                        <li class="sidenav-item">
+                            <a href="javascript:" class="sidenav-link sidenav-toggle">
+                                <i class="sidenav-icon feather icon-settings"></i>
+                                <div>Configuration</div>
+                            </a>
+                            <ul class="sidenav-menu">
+                                <li class="sidenav-item">
+                                    <a href="{{ route('sequence.operateurSequence') }}" class="sidenav-link">
+                                        <div>Séquences</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                
+                        <li class="sidenav-divider mb-1"></li>
+                        <li class="sidenav-item">
+                            <a href="{{route('shelling.shellingRapport')}}" class="sidenav-link">
+                                <div style="margin-right: 0.80rem;">
+                                    <img style="width: 18px;"  src="{{ asset('assets/production/rapport.png')}}" alt="">
+                                </div>
+                                <div>Rapports</div>
+                            </a>
+                        </li> 
+                        
+                    @endif
+                    @if (isset($etape_unskinning))
+                        
+                
+                        <li class="sidenav-divider mb-1"></li>
+                        <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
+                        <li class="sidenav-item">
+                            <a href="javascript:" class="sidenav-link sidenav-toggle">
+                                <i class="sidenav-icon feather icon-settings"></i>
+                                <div>Configuration</div>
+                            </a>
+                            <ul class="sidenav-menu">
+                                <li class="sidenav-item">
+                                    <a href="{{ route('sequence.operateurSequence') }}" class="sidenav-link">
+                                        <div>Séquences</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                
+                        <li class="sidenav-divider mb-1"></li>
+                        <li class="sidenav-item">
+                            <a href="{{route('unskinning.rapport')}}" class="sidenav-link">
+                                <div style="margin-right: 0.80rem;">
+                                    <img style="width: 18px;"  src="{{ asset('assets/production/rapport.png')}}" alt="">
+                                </div>
+                                <div>Rapports</div>
+                            </a>
+                        </li>  {{-- --}}
+                        
+                    @endif  
+                    @if (isset($etape_conditioning))
+                        
+                
+                        <li class="sidenav-divider mb-1"></li>
+                        <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
+                        <li class="sidenav-item">
+                            <a href="javascript:" class="sidenav-link sidenav-toggle">
+                                <i class="sidenav-icon feather icon-settings"></i>
+                                <div>Configuration</div>
+                            </a>
+                            <ul class="sidenav-menu">
+                                <li class="sidenav-item">
+                                    <a href="{{ route('sequence.operateurSequence') }}" class="sidenav-link">
+                                        <div>Séquences</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+              
+                        <li class="sidenav-divider mb-1"></li>
+                        <li class="sidenav-item">
+                            <a href="{{route('conditioning.rapport')}}" class="sidenav-link">
+                                <div style="margin-right: 0.80rem;">
+                                    <img style="width: 18px;"  src="{{ asset('assets/production/rapport.png')}}" alt="">
+                                </div>
+                                <div>Rapports</div>
+                            </a>
+                        </li>     {{-- --}}
+                        
+                    @endif 
+                    @if (isset($etape_classification))
+                        
+                
+                        <li class="sidenav-divider mb-1"></li>
+                        <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
+                        <li class="sidenav-item">
+                            <a href="javascript:" class="sidenav-link sidenav-toggle">
+                                <i class="sidenav-icon feather icon-settings"></i>
+                                <div>Configuration</div>
+                            </a>
+                            <ul class="sidenav-menu">
+                                <li class="sidenav-item">
+                                    <a href="{{ route('sequence.operateurSequence') }}" class="sidenav-link">
+                                        <div>Séquences</div>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="sidenav-menu">
+                                <li class="sidenav-item">
+                                    <a href="{{ route('classification.grades') }}" class="sidenav-link">
+                                        <div>Grades</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+             
+                        <li class="sidenav-divider mb-1"></li>
+                        <li class="sidenav-item">
+                            <a href="{{route('classification.rapport')}}" class="sidenav-link">
+                                <div style="margin-right: 0.80rem;">
+                                    <img style="width: 18px;"  src="{{ asset('assets/production/rapport.png')}}" alt="">
+                                </div>
+                                <div>Rapports</div>
+                            </a>
+                        </li>     {{-- --}}
+                        
+                    @endif 
+                    @if (isset($etape_drying))
+                        
+                
+                        <li class="sidenav-divider mb-1"></li>
+                        <!--li class="sidenav-header small font-weight-semibold">Planning </li-->
+                        <li class="sidenav-item">
+                            <a href="javascript:" class="sidenav-link sidenav-toggle">
+                                <i class="sidenav-icon feather icon-settings"></i>
+                                <div>Configuration</div>
+                            </a>
+                            <ul class="sidenav-menu">
+                                <li class="sidenav-item">
+                                    <a href="{{ route('sequence.operateurSequence') }}" class="sidenav-link">
+                                        <div>Séquences</div>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="sidenav-menu">
+                                <li class="sidenav-item">
+                                    <a href="{{ route('drying.createfour') }}" class="sidenav-link">
+                                        <div>Fours</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                
+                        <li class="sidenav-divider mb-1"></li>
+                        <li class="sidenav-item">
+                            <a href="{{route('drying.rapport')}}" class="sidenav-link">
+                                <div style="margin-right: 0.80rem;">
+                                    <img style="width: 18px;"  src="{{ asset('assets/production/rapport.png')}}" alt="">
+                                </div>
+                                <div>Rapports</div>
+                            </a>
+                        </li> 
+                        
+                    @endif
+                    {{-- <li class="sidenav-divider mb-1"></li>
+                        <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
+                            
+                        <li class="sidenav-item">
+                            <a href="#" class="sidenav-link">
+                                <i class="sidenav-icon lnr lnr-database"></i>
+                                <div>Stocks</div>
+                            </a>
+                        </li>
+                    <li class="sidenav-divider mb-1"></li>
+                        <li class="sidenav-item">
+                            <a href="#" class="sidenav-link">
+                                <div style="margin-right: 0.80rem;">
+                                    <img style="width: 18px;"  src="{{ asset('assets/production/rapport.png')}}" alt="">
+                                </div>
+                                <div>Rapports</div>
+                            </a>
+                        </li>  --}}
+                @endif
+                @if (Auth::check() && isset($general_admin) || isset($admin_member)  )
+                        
+                    <li class="sidenav-item">
+                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                            </div>
+                            <div>Utilisateurs</div>
+                        </a>
+                        <ul class="sidenav-menu">
+                            <li class="sidenav-item">
+                                <a href="{{ route('client.index') }}" class="sidenav-link">
+                                    <div>Administration</div>
+                                </a>
+                            </li>
+                            
+                            <li class="sidenav-item">
+                                <a href="{{ route('gene_admin.create_operator') }}" class="sidenav-link">
+                                    <div>Opération </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-item">
+                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                            </div>
+                            <div>Partenaires</div>
+                        </a>
+                        <ul class="sidenav-menu">
+                            <li class="sidenav-item">
+                                <a href="{{ route('admin_operation.create_client') }}" class="sidenav-link">
+                                    <div>Clients</div>
+                                </a>
+                            </li>
+                            <li class="sidenav-item">
+                                <a href="{{ route('admin_role.create') }}" class="sidenav-link">
+                                    <div>Fournisseurs</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-item">
+                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                            </div>
+                            <div>Planning</div>
+                        </a>
+                        <ul class="sidenav-menu">
+                            <li class="sidenav-item">
+                                <a href="{{ route('admin_operation.objectif_index') }}" class="sidenav-link">
+                                    <div>Objectifs</div>
+                                </a>
+                            </li>
+                            <li class="sidenav-item">
+                                <a href="{{ route('admin_role.create') }}" class="sidenav-link">
+                                    <div>Planifications</div>
+                                </a>
+                            </li>
+                            <li class="sidenav-item">
+                                <a href="{{ route('admin_role.create') }}" class="sidenav-link">
+                                    <div>Séquences</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-item">
+                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                            </div>
+                            <div>Production</div>
+                        </a>
+                        <ul class="sidenav-menu">
+                            <li class="sidenav-item">
+                                <a href="{{ route('admin_role.create') }}" class="sidenav-link">
+                                    <div>Rapport</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-item">
+                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                            </div>
+                            <div>Stock</div>
+                        </a>
+                        <ul class="sidenav-menu">
+                            <li class="sidenav-item">
+                                <a href="{{ route('admin_role.create') }}" class="sidenav-link">
+                                    <div>Inventaire</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-item">
+                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                            </div>
+                            <div>Finance</div>
+                        </a>
+                    </li>
+                    <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-item">
+                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                            </div>
+                            <div>Workforce</div>
+                        </a>
+                    </li>
+                    <li class="sidenav-divider mb-1"></li>
+                    <li class="sidenav-item">
+                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                            </div>
+                            <div>Mon compte</div>
+                        </a>
+                        <ul class="sidenav-menu">
+                            <li class="sidenav-item">
+                                <a href="{{ route('admin_role.create') }}" class="sidenav-link">
+                                    <div>Facturation</div>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="sidenav-menu">
+                            <li class="sidenav-item">
+                                <a href="{{ route('admin_role.create') }}" class="sidenav-link">
+                                    <div>Soutien technique</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                
+                    
+                @endif
+                
+                {{-- @if (Auth::check() && isset($admin_member) )
+                    
+                    
+                    <li class="sidenav-divider mb-1"></li>
+                    <!--li class="sidenav-header small font-weight-semibold">Planning</li-->
+                    <li class="sidenav-item">
+                        <a href="javascript:" class="sidenav-link sidenav-toggle">
+                            <div style="margin-right: 0.80rem;">
+                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                            </div>
+                            <div>Partenaires</div>
+                        </a>
+                        <ul class="sidenav-menu">
+                            <li class="sidenav-item">
+                                <a href="{{ route('admin_operation.create_client') }}" class="sidenav-link">
+                                    <div>Client</div>
+                                </a>
+                            </li>
+                            
+                            <li class="sidenav-item">
+                                <a href="{{ route('supplier.index') }}" class="sidenav-link">
+                                    <div>Fournisseur</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif --}}
                 </ul>
             </div>
-        @endif
+
+       
             <!-- [ Layout sidenav ] End -->
 
 
@@ -229,16 +790,15 @@
             <!-- [ Layout container ] Start -->
             <div class="layout-container">
                 <!-- [ Layout navbar ( Header ) ] Start -->
-                <nav class="fixed-top layout-navbar navbar navbar-expand-lg align-items-lg-center  bg-dark container-p-x  "  id="layout-navbar">
+                <nav  class="fixed-top layout-navbar navbar navbar-expand-lg align-items-lg-center  bg-dark container-p-x  "  id="layout-navbar">
 
                     <!-- Brand demo (see assets/css/demo/demo.css) -->
-                    <a href="index.html" class="navbar-brand app-brand demo d-lg-none py-0 mr-4">
+                    <a href="{{ route('dashboard') }}" class="navbar-brand app-brand demo d-lg-none py-0 mr-4">
                         <span class="app-brand-logo demo">
-                            <img src="{{ asset('assets/img/logo-dark.png')}}" alt="Brand Logo" class="img-fluid">
+                        <img src="{{ asset('assets/img/cashew.jpeg')}}" alt="Brand Logo" style="height:35px; filter: brightness(1);" >
                         </span>
-                        <span class="app-brand-text demo font-weight-normal ml-2">P-Manager</span>
+                        <span class="app-brand-text demo font-weight-normal ml-2">CashewPMS</span>
                     </a>
-
                     <!-- Sidenav toggle (see assets/css/demo/demo.css) -->
                     <div class="layout-sidenav-toggle navbar-nav d-lg-none align-items-lg-center mr-auto">
                         <a class="nav-item nav-link px-0 mr-lg-4" href="javascript:">
@@ -408,11 +968,13 @@
                 <!-- [ Layout navbar ( Header ) ] End -->
 
                 <!-- [ Layout content ] Start -->
-                <div class="layout-content" style="padding-top: 50px;">
+                <div class="layout-content" style="margin-left: 1px;">
 
                     <!-- [ content ] Start -->
                     <div class="container-fluid flex-grow-1 container-p-y">
-                        @yield('content')
+                        
+                            @yield('content')
+                        
                     </div>
                     <!-- [ content ] End -->
 
@@ -420,13 +982,13 @@
                     <nav class="layout-footer footer bg-white">
                         <div class="container-fluid d-flex flex-wrap justify-content-between text-center container-p-x pb-3">
                             <div class="pt-3">
-                                <span class="footer-text font-weight-semibold">&copy; <a href="https://srthemesvilla.com" class="footer-link" target="_blank">Srthemesvilla</a></span>
+                                <span class="footer-text font-weight-semibold">&copy; <a href="#" class="footer-link" target="_blank">LABELS TRUST</a></span>
                             </div>
                             <div>
-                                <a href="javascript:" class="footer-link pt-3">About Us</a>
+                                <!--a href="javascript:" class="footer-link pt-3">About Us</a>
                                 <a href="javascript:" class="footer-link pt-3 ml-4">Help</a>
                                 <a href="javascript:" class="footer-link pt-3 ml-4">Contact</a>
-                                <a href="javascript:" class="footer-link pt-3 ml-4">Terms &amp; Conditions</a>
+                                <a href="javascript:" class="footer-link pt-3 ml-4">Terms &amp; Conditions</a-->
                             </div>
                         </div>
                     </nav>
@@ -442,8 +1004,8 @@
     <!-- [ Layout wrapper] End -->
 
     <!-- Core scripts -->
+<script src="{{ asset('assets/js/jquery-3.6.3.js')}}" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/pace.js')}}"></script>
-    <script src="{{ asset('assets/js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{ asset('assets/libs/popper/popper.js')}}"></script>
     <script src="{{ asset('assets/js/bootstrap.js')}}"></script>
     <script src="{{ asset('assets/js/sidenav.js')}}"></script>
@@ -451,7 +1013,7 @@
     <script src="{{ asset('assets/js/material-ripple.js')}}"></script>
 
     <!-- Libs -->
-    <script src="{{ asset('assets/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
+    {{-- <script src="{{ asset('assets/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script> --}}
     <script src="{{ asset('assets/libs/eve/eve.js')}}"></script>
     <script src="{{ asset('assets/libs/flot/flot.js')}}"></script>
     <script src="{{ asset('assets/libs/flot/curvedLines.js')}}"></script>
@@ -461,13 +1023,15 @@
 
     <!-- Demo -->
     <script src="{{ asset('assets/js/demo.js')}}"></script><script src="{{ asset('assets/js/analytics.js')}}"></script>
-    <script src="{{ asset('assets/js/pages/dashboards_index.js')}}"></script>
+    {{-- <script src="{{ asset('assets/js/pages/dashboards_index.js')}}"></script> --}}
     
-    <script src="{{ asset('asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{ asset('asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
         <!-- Page level custom scripts -->
-    <script src="{{ asset('asset/js/demo/datatables-demo.js')}}"></script>
+    {{-- <script src="{{ asset('asset/js/demo/datatables-demo.js')}}"></script> --}}
+    
+
+        <!-- Page level custom scripts -->
+    @yield('javascript')
 </body>
 
 </html>

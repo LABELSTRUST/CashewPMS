@@ -3,7 +3,7 @@
 <html lang="en" class="material-style layout-fixed">
 
 <head>
-    <title>Empire | B4+ admin template by Srthemesvilla</title>
+    <title>CashewPMS</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -11,7 +11,7 @@
     <meta name="description" content="Empire Bootstrap admin template made using Bootstrap 4, it has tons of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
     <meta name="keywords" content="Empire, bootstrap admin template, bootstrap admin panel, bootstrap 4 admin template, admin template">
     <meta name="author" content="Srthemesvilla" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link rel="icon" type="image/x-icon"  href="{{ asset('assets/img/cashew.jpeg')}}">
 
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
@@ -36,6 +36,19 @@
 </head>
 
 <body>
+
+    @if(session()->has('message'))
+    <div class="alert alert-dark-success alert-dismissible fade show"  >
+        <button type="button" class="close" data-dismiss="alert" >x</button>
+        <strong> {{ session()->get('message')}}</strong>
+    </div>
+    @endif
+    @if(session()->has('error'))
+      <div class="alert alert-dark-danger alert-dismissible fade show"  >
+          <button type="button" class="close" data-dismiss="alert" >x</button>
+          <strong> {{ session()->get('error')}}</strong>
+      </div>
+    @endif
     <!-- [ Preloader ] Start -->
     <div class="page-loader">
         <div class="bg-primary"></div>
