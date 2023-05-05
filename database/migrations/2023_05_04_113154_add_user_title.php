@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('objectifs', function (Blueprint $table) {
-            $table->unsignedBigInteger('commande_id')->nullable();
-            $table->foreign('commande_id')->references('id')->on('commandes')->onDelete('set null');
+        Schema::table('admin_members', function (Blueprint $table) {
+            $table->string('title')->nullable();
         });
     }
 
@@ -26,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('objectifs', function (Blueprint $table) {
+        Schema::table('admin_members', function (Blueprint $table) {
             //
         });
     }

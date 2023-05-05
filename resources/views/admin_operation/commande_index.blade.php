@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.app')
 
 @section('css')
     
@@ -14,13 +14,6 @@
 <div class="container-fluid flex-grow-1 container-p-y">
 
 <h4 class="font-weight-bold py-3 mb-0">Commande</h4>
-    <div class="text-muted small mt-0 mb-4 d-block breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="feather icon-home"></i></a></li>
-            <li class="breadcrumb-item"><a href="#">Commande</a></li>
-            <li class="breadcrumb-item active">Liste</li>
-        </ol>
-    </div>
     <div class="row">
         <div class="row" style="margin-bottom: 20px;">
             <div class="col-lg-6 col-md-6 col-sm-6">
@@ -34,7 +27,6 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                
                                 
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead class="thead-light">
@@ -74,7 +66,7 @@
                                                 <td>{{ $commande->created_at }}</td>commande.begin
                                                 <td>
                                                     @if ($commande->production == false)
-                                                        <a href="{{ route('commande.begin',$commande->id ) }}" class="btn btn-info"> En cours </a>
+                                                        <a href="{{ route('commande.begin',$commande->id ) }}" class="btn btn-primary"> En cours</a>
                                                         
                                                     @elseif($commande->production == true)
                                                         <button class="btn btn-success"> Terminer</button>
@@ -82,7 +74,7 @@
                                                 </td>
                                                 <td>
                                                     @if ($commande->livraison == false)
-                                                        <a href="" class="btn btn-info"> Valider</a>
+                                                        <a href="" class="btn btn-primary"> Valider</a>
                                                         
                                                     @elseif($commande->production == true)
                                                         <button class="btn btn-success"> Valider</button>

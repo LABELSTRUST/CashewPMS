@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.app')
 
 
 @section('content')
@@ -12,9 +12,9 @@
     
 <div class="col-lg-12" >
          <div class="row" style="margin-bottom: 2%;">
-            {{-- <div class="col-lg-6 col-md-6 col-sm-6">
+             <div class="col-lg-6 col-md-6 col-sm-6">
                 <a href="{{ route('create.operator') }}" class="btn btn-lg btn-outline-info">Nouvel Opérateur</a>
-            </div> --}}
+            </div>{{-- --}}
             {{-- <div class="col-lg-6 col-md-6 col-sm-6" style="display: flex; justify-content: flex-end;">
                 <a href="{{ route('shift.index') }}" class="btn btn-xl btn-outline-info">Gestion des shifts</a>
             </div> --}}

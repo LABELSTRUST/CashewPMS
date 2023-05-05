@@ -42,12 +42,43 @@ class Admin_memberController extends Controller
         }else return redirect('login');
     }
 
+    public function create_fournisseur()
+    {
+        if( Auth::check()){
+            $user=$this->Admin_memberCheck();
+            if ($user instanceof \App\Models\User) {
+                $admin_member = $user;
+                return view('admin_operation.createsuplier', compact('admin_member'));
+            }else return redirect('login');
+        }else return redirect('login');
+    }
     
     public function verifyAdminGeneral()
     {
         $magasinier = app(AuthController::class);
         $result = $magasinier->verifyAdminGeneral();
         return  $result;
+    }
+
+    
+
+    public function clientindex()
+    {
+        if( Auth::check()){
+            $user=$this->Admin_memberCheck();
+            if ($user instanceof \App\Models\User) {
+                $clients = Client::orderBy('id','DESC')->paginate(20);
+                $admin_member = $user;
+                return view('admin_operation.client_index', compact('admin_member','clients'));
+            }else {
+                $user=$this->verifyAdminGeneral();
+                if ($user instanceof \App\Models\User) {
+                    $clients = Client::orderBy('id','DESC')->paginate(20);
+                    $admin_member = $user;
+                    return view('admin_operation.client_index', compact('admin_member','clients'));
+                }else return redirect('login');
+            }
+        }else return redirect('login');
     }
 
     

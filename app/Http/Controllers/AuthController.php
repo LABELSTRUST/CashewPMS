@@ -12,6 +12,7 @@ use App\Models\MatierePremiere;
 use App\Models\OperatorSequence;
 use App\Models\Produit;
 use App\Models\Role;
+use App\Models\Secteur;
 use App\Models\Stock;
 use App\Models\User_Role;
 use Carbon\Carbon;
@@ -35,21 +36,6 @@ class AuthController extends Controller
         return view('auth.creategene_admin');
     }
 
-    /**{!! Form::open(['route' => 'users.store', 'enctype' => 'multipart/form-data']) !!}
-    <div class="form-group">
-        {!! Form::label('avatar', 'Avatar') !!}
-        {!! Form::file('avatar', ['class' => 'form-control']) !!}
-    </div>
-    <!-- autres champs du formulaire ici -->
-    {!! Form::submit('Ajouter utilisateur', ['class' => 'btn btn-primary']) !!}
-    {!! Form::close() !!}
-
-    $avatar = $request->file('avatar');
-    $filename = time() . '.' . $avatar->getClientOriginalExtension();
-    $path = public_path('avatars/' . $filename);
-    Image::make($avatar)->resize(300, 300)->save($path);
-
- */
 
     public function verifyAdminGeneral()
     {
@@ -78,7 +64,6 @@ class AuthController extends Controller
     }
     
 
-
     public function register_general_admin(Request $request)
     {
 
@@ -90,6 +75,7 @@ class AuthController extends Controller
             'password' => 'required|min:6',
             'repeat_password'=>'required|same:password',
             'avatar' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'title'=> 'required',
         ]);
         
         $data = $request->all();
@@ -120,7 +106,8 @@ class AuthController extends Controller
                     ]);
                     if ($user_role) {
                         $gene_member = General_admin::create([
-                            'user_id'=>$admin_gene->id
+                            'user_id'=>$admin_gene->id,
+                            'title'=>$data['title']
                         ]);
                         if ($gene_member) {
                             return redirect()->route('gene_admin.create')->with('message',"Enregistrer avec succès");
@@ -220,32 +207,136 @@ class AuthController extends Controller
     
     public function Register(Request $request)
     {  
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'username' => 'required|unique:users',
-            'password' => 'required|min:6',
-        ]);
-           
-        $data = $request->all();
+        if( Auth::check()){
+            $user=$this->Admin_memberCheck();
+            if ($user instanceof \App\Models\User) {
+                $request->validate([
+                    'name' => 'required',
+                    'email' => 'required|email|unique:users',
+                    'username' => 'required|unique:users',
+                    'password' => 'required|min:6',
+                    'roles_id' =>'required',
+                    'departement_id'=>'required',
+                    'designation'=>'required',
+                    'avatar' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                   
+                ]);
 
-        $admin =  Role::where('name','Admin')->first();
+                $data = $request->all();
+                
+                $create = $this->create($data,$user->id);
+                if ($create) {
+                
+                    $secteur = Secteur::create([
+                        'designation'=>$data['designation'],
+                        'departement_id'=>$data['departement_id'],
+                        'user_id'=>$create->id,
+                    ]);
+
+                    
+                    if ($request->hasFile('avatar')) {
+                        $avatar = $request->file('avatar');
+                        $filename = time() . '.' . $avatar->getClientOriginalExtension();
+                        $avatar->storeAs('public/avatars', $filename);
+                       
+                        $update = $create->update(['avatar'=>$filename]);
+                    }
+                    
+                    return redirect('admin/create/operator')->with('message'," Enregistrer avec succès");
+                
+                    
+                }else {
+                    return redirect('admin/create/operator')->with('error',"Un champ est mal renseigné");
+                }
+
+            }else {
+                $user=$this->verifyAdminGeneral();
+                if ($user instanceof \App\Models\User) {
+                    $request->validate([
+                        'name' => 'required',
+                        'email' => 'required|email|unique:users',
+                        'username' => 'required|unique:users',
+                        'password' => 'required|min:6',
+                        'roles_id' =>'required',
+                        'departement_id'=>'required',
+                        'designation'=>'required',
+                        'avatar' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                       
+                    ]);
+    
+                    $data = $request->all();
+                    
+                    $create = $this->create($data,$user->id);
+                    if ($create) {
+                        
+                        $secteur = Secteur::create([
+                            'designation'=>$data['designation'],
+                            'departement_id'=>$data['departement_id'],
+                            'user_id'=>$create->id,
+                        ]);
+                        
+                    
+                        if ($request->hasFile('avatar')) {
+                            $avatar = $request->file('avatar');
+                            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+                            $avatar->storeAs('public/avatars', $filename);
+                        
+                            $update = $create->update(['avatar'=>$filename]);
+                        }
+
+                        
+                        return redirect('admin/create/operator')->with('message'," Enregistrer avec succès");
+                    
+                        
+                    }else {
+                        return redirect('admin/create/operator')->with('error',"Un champ est mal renseigné");
+                    }
+                }else {
+                    $user = $this->adminCheck();
+                    
+                    if ($user) {
+                        $request->validate([
+                            'name' => 'required',
+                            'email' => 'required|email|unique:users',
+                            'username' => 'required|unique:users',
+                            'password' => 'required|min:6',
+                            'roles_id' =>'required',
+                            'departement_id'=>'required',
+                            'designation'=>'required',
+                            'avatar' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                           
+                        ]);
         
-        if ($admin) {
-            $data['roles_id'] =  $admin->id;
-            
-            $check = $this->create($data);
-            if ($check) {
-                return redirect("dashboard")->with('message'," Bienvenu");
+                        $data = $request->all();
+                        
+                        $create = $this->create($data,$user->id);
+                        if ($create) {
+                        
+                            $secteur = Secteur::create([
+                                'designation'=>$data['designation'],
+                                'departement_id'=>$data['departement_id'],
+                                'user_id'=>$create->id,
+                            ]);
+                    
+                            if ($request->hasFile('avatar')) {
+                                $avatar = $request->file('avatar');
+                                $filename = time() . '.' . $avatar->getClientOriginalExtension();
+                                $avatar->storeAs('public/avatars', $filename);
+                            
+                                $update = $create->update(['avatar'=>$filename]);
+                            }
+                            
+                            return redirect('admin/create/operator')->with('message'," Enregistrer avec succès");
+                        
+                            
+                        }else {
+                            return redirect('admin/create/operator')->with('error',"Un champ est mal renseigné");
+                        }
+                    }return redirect("login");
+                }
             }
-            
-        }else {
-            return redirect('registration')->with('error',"Un champ est mal renseigné");
-        }
-
-         
+        }return redirect("login");
     }
-
 
     
     public function create( array $data, $author_id = null)
@@ -323,14 +414,28 @@ class AuthController extends Controller
     public function createOperator()
     {
         if(Auth::check()){
-            $user = $this->adminCheck();
+            $user=$this->Admin_memberCheck();
             
-            if ($user) {
+            if ($user instanceof \App\Models\User) {
                 $roles = Role::get();
                 if ($roles) {
-                    return view('admin.createoperator', compact('roles'));
+                    
+                    $admin_member = $user;
+                    $departements = Admin_Role::get();
+                    return view('admin.createoperator', compact('roles','departements','admin_member'));
                 }
-            }else return redirect("login");
+            }else {
+                
+                $user=$this->verifyAdminGeneral();
+                if ($user instanceof \App\Models\User) {
+                    $roles = Role::get();
+                    if ($roles) {
+                        $admin_member = $user;
+                        $departements = Admin_Role::get();
+                        return view('admin.createoperator', compact('roles','departements','admin_member'));
+                    }
+                }else return redirect("login");
+            }
 
         }else {
             return redirect("login");
@@ -409,11 +514,45 @@ class AuthController extends Controller
                     ->whereNotNull('roles_id')
                     ->get();
                 $opera = $operators->pluck('id');
-            
+             /* 
+                $geneUser = General_admin::pluck('user_id');
+                dd($geneUser);
+                $adminUser = Admin_member::pluck('user_id');
+                $operators = User::whereNotIn('id', $geneUser)->whereNotIn('id', $adminUser)->get();
+
+                dd($operators); */
                 //$operators1 = Assigner::whereIn('user_id',$opera)->get();'operators1'dd($operators);
 
                 return view('admin.listoperator',compact('operators'));
-            }return redirect('login');
+            }else {
+                $user=$this->verifyAdminGeneral();
+                if ($user instanceof \App\Models\User) {
+                    $role = Role::where('name','Operateur')->first();
+                    $magasinier = Role::where('name','Magasinier')->first();
+                    $operators = User::query()
+                        ->whereNotNull('author_id')
+                        ->orderBy('id','DESC')
+                        ->whereNotNull('roles_id')
+                        ->get();
+                    $opera = $operators->pluck('id');
+                    $admin_member = $user;
+                    return view('admin_operation.listeoperators',compact('operators','admin_member'));
+                }else {
+                    $user=$this->Admin_memberCheck();
+                    if ($user instanceof \App\Models\User) {
+                        $role = Role::where('name','Operateur')->first();
+                        $magasinier = Role::where('name','Magasinier')->first();
+                        $operators = User::query()
+                            ->whereNotNull('author_id')
+                            ->orderBy('id','DESC')
+                            ->whereNotNull('roles_id')
+                            ->get();
+                        $opera = $operators->pluck('id');
+                        $admin_member = $user;
+                        return view('admin_operation.listeoperators',compact('operators','admin_member'));
+                    }else return redirect('login');
+                }
+            }
         }else return redirect('login');
     }
 

@@ -1,3 +1,4 @@
+
 @extends('layouts.base ')
 
 
@@ -30,7 +31,7 @@
 <div class="row">
   <div class="col-lg-10" >
     
-  <div class="row" style="margin-bottom: 20px;">
+        <div class="row" style="margin-bottom: 20px;">
             <div class="col-lg-6 col-md-6 col-sm-6 ">
                 <a href="{{ route('commande.index') }}" class="btn btn-lg btn-outline-primary">Retour</a>
             </div>

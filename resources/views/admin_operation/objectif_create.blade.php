@@ -1,4 +1,4 @@
-@extends('layouts.base')
+@extends('layouts.app')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('assets/css/myform.css')}}">

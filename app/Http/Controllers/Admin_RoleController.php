@@ -45,7 +45,7 @@ class Admin_RoleController extends Controller
     {
         if( Auth::check()){
             $user=$this->verifyAdminGeneral();
-            if ($user) {
+            if ($user instanceof \App\Models\User) {
                 $general_admin = General_admin::where('user_id',$user->id)->first();
               
 

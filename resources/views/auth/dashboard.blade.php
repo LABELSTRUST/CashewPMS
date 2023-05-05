@@ -247,7 +247,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 myDiv" style=" cursor: pointer;" onclick="location.href=`{{ route('produit.index') }}`" >
+                                <div class="col-sm-4 myDiv" style=" cursor: pointer;" onclick="location.href=`{{ route('commande.index') }}`" >
                                     <div class="card mb-4">
                                         <div class="card-body">
                                             <div class="d-flex align-items-center justify-content-between">

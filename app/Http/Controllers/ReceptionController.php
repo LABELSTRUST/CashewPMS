@@ -7,6 +7,7 @@ use App\Models\Assigner;
 use App\Models\Campaign;
 use App\Models\Classification;
 use App\Models\Client;
+use App\Models\Commande;
 use App\Models\Conditionnement;
 use App\Models\Current_rapportConditionnement;
 use App\Models\Decorticage;
@@ -123,9 +124,10 @@ class ReceptionController extends Controller
             $stocks = Conditionnement::where('transfert',true)->whereIn('classification_id',$classification_ids)->get();
 
             if ($stocks) {
-              $clients = Client::get();
-              if ($clients) {
-                return view('inventaire.listbygrade',compact('stocks','clients'));
+              $commandes = Commande::where('production',true)->where('livraison',false)->get(); 
+              if ($commandes) {
+                
+                return view('inventaire.listbygrade',compact('stocks','commandes'));
               }
             }
 
@@ -188,7 +190,7 @@ class ReceptionController extends Controller
               'num_bag'=>'sometimes|nullable',
               'conditioning_id'=>'sometimes|nullable',
               'remain_bag'=>'sometimes|nullable',
-              'client_id'=>'sometimes|nullable',
+              'commande_id'=>'sometimes|nullable',
 
           ]);
           $data = $request->all();
@@ -215,26 +217,45 @@ class ReceptionController extends Controller
                     }else return redirect()->route('reception.stockbygrade',$conditionning->classification_id)->with('error',"Echec");
                   }else return redirect()->route('reception.stockbygrade',$conditionning->classification_id)->with('error',"Echec");
                 } */
+                $commande = Commande::find($data['commande_id']);
 
-                $exit = Sortie::create([
-                  'num_bag'=>$data['num_bag'],
-                  'conditioning_id'=>$data['conditioning_id'],
-                  'initial_quantity'=>$conditionning->num_bag,
-                  'client_id'=>$data['client_id'],
-                ]);
-                if ($exit) {
-                  $quantity = $conditionning->num_bag - $data['num_bag'];
-                  $update = $conditionning->update(['num_bag'=>$quantity]);
+                if ($commande) {
+                  $client = Client::where('id',$commande->client_id)->first();
+                  if ($client) {
+                    $exit = Sortie::create([
+                      'num_bag'=>$data['num_bag'],
+                      'conditioning_id'=>$data['conditioning_id'],
+                      'initial_quantity'=>$conditionning->num_bag,
+                      'client_id'=>$client->id,
+                      'commande_id'=>$data['commande_id'],
+                    ]);
+    
+                    if ($exit) {
+                      $quantity = $conditionning->num_bag - $data['num_bag'];
+                      $update = $conditionning->update(['num_bag'=>$quantity]);
+                      $commande_liv = $commande->update(['livraison'=>true]);
+                      
+                      session()->flash('message', 'Sortie avec succès');
+                      return response()->json([
+                          $conditionning
+                      ]);
+                    }else 
+                      session()->flash('error', 'Echec');
+                      return response()->json([
+                          'error'=>"Une erreur s'est produite"
+                      ]);
                   
-                  session()->flash('message', 'Sortie avec succès');
-                  return response()->json([
-                      $conditionning
-                  ]);
-                }else 
+                  }else 
                   session()->flash('error', 'Echec');
                   return response()->json([
                       'error'=>"Une erreur s'est produite"
                   ]);
+                }else 
+                session()->flash('error', 'Echec');
+                return response()->json([
+                    'error'=>"Une erreur s'est produite"
+                ]);
+
               }else 
                   session()->flash('error', 'Une erreur s\'est produite');
                   return response()->json([
@@ -242,25 +263,43 @@ class ReceptionController extends Controller
                   ]);
             }else {
               if ($conditionning->remain_bag >= $data['remain_bag']) {
-                $exit = Sortie::create([
-                  'remain_bag'=>$data['remain_bag'],
-                  'conditioning_id'=>$data['conditioning_id'],
-                  'initial_quantity'=>$conditionning->num_bag,
-                  'client_id'=>$data['client_id'],
-                  
-                ]);
-                if ($exit) {
-                  $quantity = $conditionning->remain_bag - $data['remain_bag'];
-                  $update = $conditionning->update(['remain_bag'=>$quantity]);
-                  session()->flash('message', 'Sortie avec succès');
+                
+                $commande = Commande::find($data['commande_id']);
+
+                if ($commande) {
+                  $client = Client::where('id',$commande->client_id)->first();
+                  if ($client) {
+                    $exit = Sortie::create([
+                      'remain_bag'=>$data['remain_bag'],
+                      'conditioning_id'=>$data['conditioning_id'],
+                      'initial_quantity'=>$conditionning->num_bag,
+                      'client_id'=>$client->id,
+                      'commande_id'=>$data['commande_id'],
+                      
+                    ]);
+                    if ($exit) {
+                      $quantity = $conditionning->remain_bag - $data['remain_bag'];
+                      $update = $conditionning->update(['remain_bag'=>$quantity]);
+                      $commande_liv = $commande->update(['livraison'=>true]);
+                      session()->flash('message', 'Sortie avec succès');
+                      return response()->json([
+                          $conditionning
+                      ]);
+                    }else  
+                        session()->flash('error', 'Une erreur s\'est produite');
+                        return response()->json([
+                            'error'=>"Une erreur s'est produite"
+                        ]);
+                  }else  
+                  session()->flash('error', 'Une erreur s\'est produite');
                   return response()->json([
-                      $conditionning
+                      'error'=>"Une erreur s'est produite"
                   ]);
                 }else  
-                    session()->flash('error', 'Une erreur s\'est produite');
-                    return response()->json([
-                        'error'=>"Une erreur s'est produite"
-                    ]);
+                session()->flash('error', 'Une erreur s\'est produite');
+                return response()->json([
+                    'error'=>"Une erreur s'est produite"
+                ]);
               }else  
                 session()->flash('error', 'Une erreur s\'est produite');
                 return response()->json([

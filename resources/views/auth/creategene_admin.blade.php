@@ -92,7 +92,7 @@
           <form class="user"action="{{ route('gene_admin.register',$client->id) }}" method="POST"  enctype="multipart/form-data">
               @csrf
               <div class="form-row mb-3">
-                <div class="form-group col-md-3" id="nbr_sacs">
+                <div class="form-group col-md-12" id="nbr_sacs">
                   <label for="">Name</label>{{-- {{ isset($origin_prod ) ? $origin_prod->date_recep : '' }} --}}
                   <input type="text" name="name" required class="form-control" value="{{ $client->name }}" id="" placeholder="Nom">
                 </div>
@@ -121,37 +121,42 @@
             <form class="user"action="{{ route('gene_admin.register') }}" method="POST"  enctype="multipart/form-data">
                 @csrf
                 <div class="form-row mb-3">
-                  <div class="form-group col-md-4" id="nbr_sacs">
+                  <div class="form-group col-md-12" id="nbr_sacs">
                     <label for="">Username</label>{{-- {{ isset($origin_prod ) ? $origin_prod->date_recep : '' }} --}}
                     <input type="text" name="username" required class="form-control " id=""
                         placeholder="username">
                   </div>
-                  <div class="form-group col-md-4" id="nbr_sacs">
+                  <div class="form-group col-md-12" id="nbr_sacs">
                     <label for="">Name</label>{{-- {{ isset($origin_prod ) ? $origin_prod->date_recep : '' }} --}}
                     <input type="text" name="name" required class="form-control " id=""
                         placeholder="Nom">
                   </div>
-                  {{-- <div class="col-sm-4">
+                  {{-- <div class="col-md-12">
                       <label for="">Prénom</label>
                       <input type="text" name="first_name" required class="form-control " id="" placeholder="Prénom">
                   </div> --}}
-                  <div class="form-group col-md-4" id="nbr_sacs">
+                  <div class="form-group col-md-12" id="nbr_sacs">
                     <label for="">Email</label>
                     <input type="email" name="email" required class="form-control " id="exampleLastName"
                         placeholder=" Email">
                   </div>
-                  <div class="col-sm-4 mb-3 mb-sm-0">
+                  <div class="col-md-12 mb-3 mb-sm-0">
                       <label for="">Password</label>
                       <input type="password" required name="password" class="form-control " id="exampleInputPassword" placeholder="Password">
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-md-12">
                     
                     <label for="">Repeat Password</label>
                     <input type="password" class="form-control" name ="repeat_password"  id="exampleRepeatPassword" placeholder="Repeat Password">
                   </div>
-                  <div class="form-group col-md-4">
+                  <div class="form-group col-md-12">
                       <label for="">Avatar</label>
                       <input type="file" name="avatar" class="form-control">
+                  </div>
+                  <div class="form-group col-md-12" id="nbr_sacs">
+                    <label for="">Titre</label>
+                    <input type="text" name="title" required class="form-control " id="exampleLastName"
+                        placeholder=" Titre">
                   </div>
                 </div>
              

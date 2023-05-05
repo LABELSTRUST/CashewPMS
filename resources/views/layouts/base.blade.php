@@ -83,7 +83,7 @@
                     <!-- Layouts -->
        
                     
-                @if(Auth::check() && Auth::user()->getRole?->name === "Admin")
+                @if(Auth::check() && Auth::user()->getRole?->name === "Admin" || Auth::user()->getRole?->name === "Supervision")
                     <li class="sidenav-divider mb-1"></li>
                     <!--li class="sidenav-header small font-weight-semibold">Configuration</li-->
                     <!--li class="sidenav-item">
@@ -607,9 +607,8 @@
                         
                     <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
-                            <div style="margin-right: 0.80rem;">
-                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
-                            </div>
+                            
+                            <i class="sidenav-icon lnr lnr-users "></i>
                             <div>Utilisateurs</div>
                         </a>
                         <ul class="sidenav-menu">
@@ -651,7 +650,7 @@
                     <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
                             <div style="margin-right: 0.80rem;">
-                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                                <img style="width: 25px;"  src="{{ asset('assets/flaticon/plan.png')}}" alt="">
                             </div>
                             <div>Planning</div>
                         </a>
@@ -677,7 +676,7 @@
                     <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
                             <div style="margin-right: 0.80rem;">
-                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                                <img style="width: 25px;"  src="{{ asset('assets/flaticon/production.png')}}" alt="">
                             </div>
                             <div>Production</div>
                         </a>
@@ -692,8 +691,8 @@
                     <li class="sidenav-divider mb-1"></li>
                     <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
-                            <div style="margin-right: 0.80rem;">
-                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
+                            <div class="lnr lnr-database display-5 text-dark" style="margin-right: 0.80rem;">
+                                
                             </div>
                             <div>Stock</div>
                         </a>
@@ -708,9 +707,7 @@
                     <li class="sidenav-divider mb-1"></li>
                     <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
-                            <div style="margin-right: 0.80rem;">
-                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
-                            </div>
+                            <i class="lnr lnr-chart-bars" style="margin-right: 0.80rem;"></i>
                             <div>Finance</div>
                         </a>
                     </li>
@@ -726,9 +723,7 @@
                     <li class="sidenav-divider mb-1"></li>
                     <li class="sidenav-item">
                         <a href="javascript:" class="sidenav-link sidenav-toggle">
-                            <div style="margin-right: 0.80rem;">
-                                <img style="width: 25px;"  src="{{ asset('assets/inventaire/partenaire.png')}}" alt="">
-                            </div>
+                            <i style="margin-right: 0.80rem;" class="feather icon-user"></i>
                             <div>Mon compte</div>
                         </a>
                         <ul class="sidenav-menu">

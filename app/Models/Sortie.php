@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,7 +18,8 @@ class Sortie extends Model
         'num_bag',
         'remain_bag',
         'initial_quantity',
-        'client_id'
+        'client_id',
+        'commande_id'
     ];
 
 
@@ -30,6 +32,12 @@ class Sortie extends Model
     public function getConditioning()
     {
         return  $this->belongsTo(Conditionnement::class,'conditioning_id');
+    }
+
+    
+    public function getCommande()
+    {
+        return  $this->belongsTo(Commande::class,'commande_id');
     }
 }
 

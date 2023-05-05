@@ -33,7 +33,6 @@ class Calibrage extends Model
         'name_controler',
     ];
     
-
     
     public function getStock()
     {

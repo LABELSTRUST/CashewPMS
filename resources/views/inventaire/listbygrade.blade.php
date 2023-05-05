@@ -134,10 +134,10 @@
                             <input type="text" hidden name="conditioning_id" value="" id="stock_id">
                             <input type="number" class="form-control mb-3" min=0 name="num_bag" id="" placeholder="Nombre de sac entier" value="">
                             <label for="">Client</label>
-                            <select  class="form-control mb-3"  name="client_id" id="client_id1">
+                            <select  class="form-control mb-3"  name="commande_id" id="commande_id1">
                                 <option value=""></option>
-                                @foreach ($clients as $client)
-                                <option value="{{$client->id}}">{{$client->code }} {{$client->code}}{{$client->name}} {{$client->first_name}}</option>
+                                @foreach ($commandes as $commande)
+                                <option value="{{$commande->id}}">{{$commande->id_order }}   {{  $commande->getClient?->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -171,10 +171,10 @@
                         <input type="number" class="form-control mb-3" min=0 name="remain_bag" id="remain_bag" placeholder="Nombre de sac entier" value="1">
 
                         <label for="">Client</label>
-                        <select class="form-control mb-3" name="client_id" id="client_id2">
+                        <select class="form-control mb-3" name="commande_id" id="commande_id2">
                             <option value=""></option>
-                            @foreach ($clients as $client)
-                            <option value="{{$client->id}}">{{$client->code }} {{$client->code}}{{$client->name}} {{$client->first_name}}</option>
+                            @foreach ($commandes as $commande)
+                            <option value="{{$commande->id}}">{{$commande->id_order }} {{ $commande->getUser?->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -227,14 +227,14 @@
 
             let num_bag = $("input[name='num_bag']").val();
             let stock_id = $("input[name='conditioning_id']").val();
-            let client_id = $("#client_id1").val();
+            let commande_id = $("#commande_id1").val();
             
             
             let data = {
                     "_token": "{{ csrf_token() }}",
                     num_bag : num_bag,
                     conditioning_id :stock_id,
-                    client_id : client_id
+                    commande_id : commande_id
                     
                 }
              
@@ -260,14 +260,14 @@
 
             let remain_bag = $("input[name='remain_bag']").val();
             let stock_id = $("input[name='stock_id']").val();
-            let client_id = $("#client_id2").val();
+            let commande_id = $("#commande_id2").val();
             
             
             let data = {
                     "_token": "{{ csrf_token() }}",
                     remain_bag : remain_bag,
                     conditioning_id :stock_id,
-                    client_id : client_id
+                    commande_id : commande_id
                     
                 }
              
