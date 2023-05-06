@@ -70,7 +70,6 @@ class General_adminController extends Controller
                     'username' => 'required|unique:users',
                     'password' => 'required|min:6',
                     'avatar' => 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                    'title' =>'required'
                 ]);
                 
                 $data = $request->all();
@@ -88,7 +87,7 @@ class General_adminController extends Controller
                        /*  if () { */
 
                        
-                            $admin_member = $this->create_operationer($data['name'],$data['email'],$data['username'],$data['password'],$data['roles_id'],$user,$data['title']);
+                            $admin_member = $this->create_operationer($data['name'],$data['email'],$data['username'],$data['password'],$data['roles_id'],$user);
                             if ($admin_member) {
                                 
                                 $update = $admin_member->update(['avatar'=>$filename]);
@@ -98,7 +97,7 @@ class General_adminController extends Controller
                             }
                         /* }else return redirect()->route('gene_admin.create_operator')->with('error',"Erreur sur l'enregistrement de l'avatar"); */
                     }else {
-                        $admin_member = $this->create_operationer($data['name'],$data['email'],$data['username'],$data['password'],$data['roles_id'],$user,$data['title']);
+                        $admin_member = $this->create_operationer($data['name'],$data['email'],$data['username'],$data['password'],$data['roles_id'],$user);
                         if ($admin_member) {
                             return redirect()->route('gene_admin.create_operator')->with('message',"Enregistrer avec succès");
                         }else return redirect()->route('gene_admin.create_operator')->with('error',"Erreur sur l'avatar");
@@ -110,7 +109,7 @@ class General_adminController extends Controller
                             $avatar = $request->file('avatar');
                             $filename = time() . '.' . $avatar->getClientOriginalExtension();
                             $avatar->storeAs('public/avatars', $filename);
-                            $admin_member = $this->create_operationer($data['name'],$data['email'],$data['username'],$data['password'],$data['roles_id'],$user,$data['title']);
+                            $admin_member = $this->create_operationer($data['name'],$data['email'],$data['username'],$data['password'],$data['roles_id'],$user);
                             if ($admin_member) {
                                 $update = $admin_member->update(['avatar'=>$filename]);
                                 if ($update) {
@@ -118,7 +117,7 @@ class General_adminController extends Controller
                                 }else return redirect()->route('gene_admin.create_operator')->with('error',"Erreur sur l'avatar");
                             }
                         }else {
-                            $admin_member = $this->create_operationer($data['name'],$data['email'],$data['username'],$data['password'],$data['roles_id'],$user,$data['title']);
+                            $admin_member = $this->create_operationer($data['name'],$data['email'],$data['username'],$data['password'],$data['roles_id'],$user);
                             if ($admin_member) {
                                 return redirect()->route('gene_admin.create_operator')->with('message',"Enregistrer avec succès");
                             }else return redirect()->route('gene_admin.create_operator')->with('error',"Erreur sur l'avatar");
@@ -129,7 +128,7 @@ class General_adminController extends Controller
         }else return redirect('login');
     }
 
-    public function create_operationer($name,$email,$username,$password,$roles_id,$user,$title)
+    public function create_operationer($name,$email,$username,$password,$roles_id,$user)
     {
 
         $admin_member = User::create([
@@ -147,8 +146,7 @@ class General_adminController extends Controller
             ]);
             if ($user_role) {
                 $gene_member = Admin_member::create([
-                    'user_id'=>$admin_member->id,
-                    'title'=>$title
+                    'user_id'=>$admin_member->id
                 ]);
                 if ($gene_member) {
                     return $admin_member;

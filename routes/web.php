@@ -75,7 +75,6 @@ Route::get('/general/admin/role/edit/{admin_Role}', [Admin_RoleController::class
 Route::post('/general/admin/role/update/{admin_Role}', [Admin_RoleController::class, 'update'])->name('admin_role.update');
 
 /** Admin Opération */
-Route::get('/admin/operation/clients/index', [Admin_memberController::class, 'clientindex'])->name('admin_operation.clientindex');
 Route::get('/admin/operation/client/create', [Admin_memberController::class, 'create_client'])->name('admin_operation.create_client');
 Route::post('/admin/operation/client/store', [Admin_memberController::class, 'storeClient'])->name('admin_operation.store_client');
 
@@ -194,6 +193,10 @@ Route::get('/admin/assigner/poste/{sequence_id}', [AssignerController::class, 'a
 Route::post('/admin/assigner/poste/{sequence_id}', [AssignerController::class, 'assignerPostecreate'])->name('assigner.assignerPostecreate');
 Route::get('/admin/assigner/poste/operateur/{sequence_id}', [AssignerController::class, 'liste_operateur_assigner'])->name('assigner.poste_operateur');
 Route::post('/admin/assigner/poste/operateur/update/{assigner}', [AssignerController::class, 'update_operateur'])->name('assigner.update_operateur');
+Route::get('/admin/assigner/poste/edit/{id}', [AssignerController::class, 'editt'])->name('operateur.edit');
+Route::post('/admin/assigner/poste/operateur/updated/{assigner}', [AssignerController::class, 'update_operateur_on'])->name('assigner.update_operateur_on');
+
+
 
 Route::get('/admin/assigner/poste/reconduire/{sequence}', [AssignerController::class, 'reconduire'])->name('reconduire');
 
@@ -240,11 +243,8 @@ Route::get('/supplier/details/{supplier}', [FournisseurController::class, 'suppl
 
 Route::get('/admin/commandes', [CommandeController::class, 'index'])->name('commande.index');
 Route::get('/admin/commande/create', [CommandeController::class, 'create'])->name('commande.create');
-Route::get('/admin/commande/client/{client}', [CommandeController::class, 'client_order'])->name('commande.client_order');
-Route::get('/admin/commande/production/{commande}', [CommandeController::class, 'productionCommande'])->name('commande.begin');
 /* Route::get('/admin/commande/create/{client}', [CommandeController::class, 'create'])->name('commande.create'); */
 Route::post('/admin/commande', [CommandeController::class, 'store'])->name('commande.store');
-Route::post('/admin/commande/client', [CommandeController::class, 'store_client_order'])->name('commande.store_commande_client');
 
 
 //Objectif objectif.create

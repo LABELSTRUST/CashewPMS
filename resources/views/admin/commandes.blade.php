@@ -24,7 +24,7 @@
     <div class="row">
         <div class="row" style="margin-bottom: 20px;">
             <div class="col-lg-6 col-md-6 col-sm-6">
-                <a href="{{ route('commande.create') }}" class="btn btn-lg btn-outline-info">Nouvelle commande</a>
+                <a href="{{ route('client.index') }}" class="btn btn-lg btn-outline-info">Nouvelle commande</a>
             </div>
         </div>
 
@@ -35,17 +35,15 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 
-                                
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead class="thead-light">
                                         <tr>
                                             <th>#</th>
+                                            <th>Code</th>
                                             <th>ID Order</th>
                                             <th>Client</th>
                                             <th>Produit</th>
                                             <th>Date</th>
-                                            <th>Production</th>
-                                            <th>Livraison</th>
                                             <th>Action</th>
                                             <!--th>Salary</th-->
                                         </tr>
@@ -53,12 +51,11 @@
                                     <tfoot>
                                         <tr>
                                             <th>#</th>
+                                            <th>Code</th>
                                             <th>ID Order</th>
                                             <th>Client</th>
                                             <th>Produit</th>
                                             <th>Date</th>
-                                            <th>Production</th>
-                                            <th>Livraison</th>
                                             <th>Action</th>
                                             <!--th>Salary</th-->
                                         </tr>
@@ -67,30 +64,15 @@
                                       
                                       @foreach ($commandes as $commande)
                                           <tr>
-                                                <td>{{ $commande->id }}</td>
-                                                <td>{{ $commande->id_order }}</td>
-                                                <td>{{ $commande->getClient?->name }}</td>
-                                                <td>{{ $commande->getProduit?->name }}</td>
-                                                <td>{{ $commande->created_at }}</td>commande.begin
-                                                <td>
-                                                    @if ($commande->production == false)
-                                                        <a href="{{ route('commande.begin',$commande->id ) }}" class="btn btn-info"> En cours </a>
-                                                        
-                                                    @elseif($commande->production == true)
-                                                        <button class="btn btn-success"> Terminer</button>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if ($commande->livraison == false)
-                                                        <a href="" class="btn btn-info"> Valider</a>
-                                                        
-                                                    @elseif($commande->production == true)
-                                                        <button class="btn btn-success"> Valider</button>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <a class="btn btn-outline-info" href="">Modifier</a>
-                                                </td>
+                                              <td>{{ $commande->id }}</td>
+                                              <td>{{ $commande->code }}</td>
+                                              <td>{{ $commande->id_order }}</td>
+                                              <td>{{ $commande->getClient?->name }}</td>
+                                              <td>{{ $commande->getProduit?->name }}</td>
+                                              <td>{{ $commande->created_at }}</td>
+                                              <td style=" width: 25%;">
+                                                <a class="btn btn-outline-info" href="">Modifier</a>
+                                            </td>
                                               <!--td>$320,800</td-->
                                           </tr>
                                       @endforeach

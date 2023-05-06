@@ -35,7 +35,7 @@
 
 <div class="row">
     
-<div class="col-lg-10" style="margin-left: 2%;">
+<div class="col-md-12" style="margin-left: 2%;">
          <div class="row d-flex justify-content-between mb-3">
              <div class="col-lg-6 col-md-6 col-sm-6 " >
                  <a class="btn btn-info" href="{{route('dashboard')}}">Retour</a>

@@ -14,7 +14,6 @@ class General_admin extends Model
 
     protected $fillable = [
         'user_id',
-        'title'
     ];
 
     

@@ -35,11 +35,19 @@
             <li class="breadcrumb-item active">Liste</li>
         </ol>
     </div>
+
+
+    {{-- @if (isset( $origin_prod->date_time_decharge)&& isset($origin_prod->date_charg))
+        <div class="mb-2 " >
+          <a href="{{ route('reception.fiche',[$origin_prod->id]) }}" class="btn btn-lg btn-outline-info">Fiche</a>
+        </div>
+        
+      @endif --}}
 </div>
 
     <div class="row">
     
-        <div class="col-lg-10" style="margin-left: 2%;">
+        <div class="col-md-12" style="margin-left: 2%;">
          <div class="row d-flex justify-content-between" style="margin-bottom: 20px;">
             <div class="mb-2">
                 <a href="{{ route('calibrage.index',[$calibrage->stock_id]) }}" class="btn btn-lg btn-outline-info">Retour</a>
@@ -102,7 +110,7 @@
                                         <td>4</td>
                                     </tr>
                                     <tr id="prelevernoix">
-                                        <td>Prélever un kilogramme (998 g à 1002g) de noix</td>
+                                        <td>Prélever un kilogramme (1000 g) de noix</td>
                                         <td><button class="btn btn-info"  onclick="changeColor('seaux','prelevernoix')">FAIT</button></td>
                                         <td>5</td>
                                     </tr>
@@ -114,7 +122,7 @@
                                     </tr>
                                     <tr id="grainage">
                                         <td rowspan="2">Grainage</td>
-                                        <td>Regrouper les noix par petits Tas de 10</td>
+                                        <td>Regrouper les noix par petits Tas</td>
                                         <td><button class="btn btn-info"  onclick="changeColor('thaux','grainage')">FAIT</button></td>
                                         <td>1</td>
                                     </tr>

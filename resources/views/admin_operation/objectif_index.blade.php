@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
 
 @section('content')
@@ -29,7 +29,7 @@
 
 <div class="row">
     
-    <div class="col-sm-12" >
+    <div class="col-lg-10" >
          <div class="row d-flex justify-content-between mb-2" >
             <div class="mb-2">
                 <a href="{{ route('admin_operation.objectif_create') }}" class="btn btn-lg btn-outline-info">Nouvel Objectif</a>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead class="thead-light">
                                         <tr>
                                             <th>#</th>
@@ -104,7 +104,7 @@
 @endsection
 
 @section('javascript')
+<script src="{{ asset('asset/js/demo/datatables-demo.js')}}"></script>
 <script src="{{ asset('asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{ asset('asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{ asset('asset/js/demo/datatables-demo.js')}}"></script>
 @endsection

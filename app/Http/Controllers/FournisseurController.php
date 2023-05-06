@@ -146,55 +146,11 @@ class FournisseurController extends Controller
                         }else return redirect()->route('supplier.create')->with('error',"Une erreur s'est produite");
                     }    
 
-                }else {
-                    $user=$this->Admin_memberCheck();
-                    if ($user instanceof \App\Models\User) {
-                        $request->validate([
-                            'email' => 'required',
-                            'country'=>'required',
-                            'tel'=>'required',
-                            'adresse'=>'required',
-                            'first_name'=>'required',
-                            'company'=>'required',
-                            'postal_code'=>'required',
-                            'position'=>'required',
-                            'city'=>'required',
-                            'categorie'=>'required',
-                            'name'=>'required'
-                        ]);
-                        
-                        $data = $request->all();
-                        $exist = Fournisseur::where('tel',$data['tel'])->first();
-                        if ($exist) {
-                            return redirect()->route('supplier.create')->with('error',"Ce numéro de téléphone existe déjà");
-                        }
-        
-                        $exist = Fournisseur::where('email',$data['email'])->first();
-                        if (isset($exist)) {
-                            return redirect()->route('supplier.create')->with('error',"Ce Fournisseur existe déjà");
-                        }else{
-                            $supplier = $this->create_supplier($data['email'],$data['country'],$data['tel'],$data['adresse'],$data['first_name'],$data['company'],$data['postal_code'],$data['position'],$data['city'],$data['categorie'],$data['name']);
-                            if ($supplier) {
-                                return redirect()->route('supplier.create')->with('message',"Enregistrer avec succès");
-                            }else return redirect()->route('supplier.create')->with('error',"Une erreur s'est produite");
-                        }    
-    
-                    }return redirect('login');
-                }  
+                } return redirect('login'); 
             }
            
         }else return redirect('login');
     }
-
-    
-    
-    public function Admin_memberCheck()
-    {
-        $admin_member = app(AuthController::class);
-        $result = $admin_member->Admin_memberCheck();
-        return  $result;
-    }
-
     
     public function create_supplier($email,$country,$tel,$adresse,$first_name,$company,$postal_code,$position,$city,$categorie,$name)
     {

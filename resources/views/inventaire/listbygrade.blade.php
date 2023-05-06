@@ -43,7 +43,7 @@
 
 <div class="row">
     
-<div class="col-lg-10" style="margin-left: 2%;">
+<div class="col-md-12" style="margin-left: 2%;">
          <div class="row" style="margin-bottom: 20px;">
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <a href="{{ URL::previous() }}" class="btn btn-lg btn-outline-info">Retour</a>
@@ -134,10 +134,10 @@
                             <input type="text" hidden name="conditioning_id" value="" id="stock_id">
                             <input type="number" class="form-control mb-3" min=0 name="num_bag" id="" placeholder="Nombre de sac entier" value="">
                             <label for="">Client</label>
-                            <select  class="form-control mb-3"  name="commande_id" id="commande_id1">
+                            <select  class="form-control mb-3"  name="client_id" id="client_id1">
                                 <option value=""></option>
-                                @foreach ($commandes as $commande)
-                                <option value="{{$commande->id}}">{{$commande->id_order }}   {{  $commande->getClient?->name }}</option>
+                                @foreach ($clients as $client)
+                                <option value="{{$client->id}}">{{$client->code }} {{$client->code}}{{$client->name}} {{$client->first_name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -171,10 +171,10 @@
                         <input type="number" class="form-control mb-3" min=0 name="remain_bag" id="remain_bag" placeholder="Nombre de sac entier" value="1">
 
                         <label for="">Client</label>
-                        <select class="form-control mb-3" name="commande_id" id="commande_id2">
+                        <select class="form-control mb-3" name="client_id" id="client_id2">
                             <option value=""></option>
-                            @foreach ($commandes as $commande)
-                            <option value="{{$commande->id}}">{{$commande->id_order }} {{ $commande->getUser?->name }}</option>
+                            @foreach ($clients as $client)
+                            <option value="{{$client->id}}">{{$client->code }} {{$client->code}}{{$client->name}} {{$client->first_name}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -227,14 +227,14 @@
 
             let num_bag = $("input[name='num_bag']").val();
             let stock_id = $("input[name='conditioning_id']").val();
-            let commande_id = $("#commande_id1").val();
+            let client_id = $("#client_id1").val();
             
             
             let data = {
                     "_token": "{{ csrf_token() }}",
                     num_bag : num_bag,
                     conditioning_id :stock_id,
-                    commande_id : commande_id
+                    client_id : client_id
                     
                 }
              
@@ -260,14 +260,14 @@
 
             let remain_bag = $("input[name='remain_bag']").val();
             let stock_id = $("input[name='stock_id']").val();
-            let commande_id = $("#commande_id2").val();
+            let client_id = $("#client_id2").val();
             
             
             let data = {
                     "_token": "{{ csrf_token() }}",
                     remain_bag : remain_bag,
                     conditioning_id :stock_id,
-                    commande_id : commande_id
+                    client_id : client_id
                     
                 }
              

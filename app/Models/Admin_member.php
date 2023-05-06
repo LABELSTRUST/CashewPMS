@@ -14,7 +14,6 @@ class Admin_member extends Model
 
     protected $fillable = [
         'user_id',
-        'title'
     ];
 
     
