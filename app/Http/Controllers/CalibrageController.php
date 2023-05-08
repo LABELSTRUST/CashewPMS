@@ -1417,7 +1417,7 @@ return response()->json([$session]); */
         return view('calibrage.pdf',compact('calibrage','date_recep','date_time_decharge','date_charg','qr'));
     }
 
-    public function imprimer(OrigineProd $reception)
+    public function imprimer(OrigineProd $calibrage)
     {
         if (Auth::user()) {
             $user=$this->verifyOperator();
