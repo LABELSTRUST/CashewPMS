@@ -20,7 +20,7 @@
 
 <div class="row">
     
-    <div class="col-lg-10" >
+    <div class="col-md-12" >
          <div class="row" style="margin-bottom: 20px;">
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <a href="" id="retour" class="btn btn-lg btn-outline-info">Retour</a>

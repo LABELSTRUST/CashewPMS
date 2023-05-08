@@ -181,7 +181,7 @@
                     <label for="">Categorie</label>
                     <select name="categorie" class="form-control" id="categorie">
                       <option value=""></option>
-                      <option value="usine">Coopérative</option>  
+                      <option value="usine">Usine</option>
                       <option value="commerce">Commerce</option>
                     </select>
                 </div>

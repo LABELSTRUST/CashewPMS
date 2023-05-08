@@ -47,7 +47,7 @@
             </div--> --}}
         
         <div class="col-lg-6 col-md-6 col-sm-6 ">
-            <a href="{{ route('sequence.index') }}" class="btn btn-lg btn-outline-primary">Séquence</a>
+            <a href="{{ route('sequence.index') }}" class="btn btn-lg btn-outline-primary">Séquences</a>
         </div>
     </div>
   </div>
@@ -93,7 +93,7 @@
                                       <div class="col-sm-6">
                                         
                                         @if($objectif->obj_remain_quantity)
-                                          <label for="">Quantité Restante</label>
+                                          <label for="">Quantité</label>
                                             <input required type="number" min=0 name="quantity_commander" value="{{ $objectif->obj_remain_quantity }}" class="form-control"
                                                 id="quantity_commander" disabled placeholder="Quantité Commander">
 

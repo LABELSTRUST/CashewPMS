@@ -14,29 +14,29 @@
     <!-- Custom fonts for this template-->
     @yield('link')
     <link href="{{ asset('asset/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ asset('asset/css/mycss.css')}}">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    @yield('css')
     <link href="{{ asset('asset/css/sb-admin-2.min.css')}}" rel="stylesheet">
 
 </head>
 
-<body id="page-top" class="">
+<body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav  sidebar sidebar-dark accordion mysiedar" id="accordionSidebar" >
+        <ul class="navbar-nav bg-ligth text-dark navbar-light sidebar sidebar-dark accordion" id="accordionSidebar" >
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center  justify-content-center " href="{{ route('dashboard') }}">
-                <img src="{{ asset('assets/img/logo_label.png')}}" alt="Brand Logo" style="height:35px;">
-                <div class="sidebar-brand-text mx-3">CashewPMS <sup></sup></div>
+            <a class="sidebar-brand d-flex align-items-center bg-dark justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">P-MANAGER <sup></sup></div>
             </a>
 
             <!-- Divider -->
@@ -53,34 +53,24 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            @if(Auth::check() && isset($general_admin) || isset($admin_member))
+            @if(Auth::user()->getRole->name === "Admin")
                 <!-- Heading -->
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#users"
-                        aria-expanded="true" aria-controls="users">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Utilisateurs</span>
-                    </a>
-                    <div id="users" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">{{-- 
-                            <h6 class="collapse-header">Gestion des Lignes</h6> --}}
-                            <a class="collapse-item" href="{{ route('client.index') }}">Administration</a>
-                            <a class="collapse-item" href="{{ route('gene_admin.create_operator') }}">Opération</a>
-                        </div>
-                    </div>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
-                        <span>Partenaires</span>
+                        <span>Lignes</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">{{-- 
                             <h6 class="collapse-header">Gestion des Lignes</h6> --}}
                             <a class="collapse-item" href="{{ route('admin_operation.clientindex') }}">Clients</a>
                             <a class="collapse-item" href="{{ route('supplier.index') }}">Fournisseurs</a>
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Gestion des Lignes</h6>
+                            <a class="collapse-item" href="{{ route('ligne.index') }}">Liste</a>
+                            <a class="collapse-item" href="{{ route('ligne.create') }}">Créer</a>
                         </div>
                     </div>
                 </li>
@@ -90,15 +80,14 @@
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                         aria-expanded="true" aria-controls="collapseUtilities">
                         <i class="fas fa-clipboard" aria-hidden="true"></i>
-                        <span>Planning</span>
+                        <span>Poste</span>
                     </a>
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">{{-- 
-                            <h6 class="collapse-header">Gestion des Postes:</h6> --}}
-                            <a class="collapse-item" href="{{ route('admin_operation.objectif_index') }}">Objectifs</a>
-                            <a class="collapse-item" href="{{ route('admin_role.create') }}">Planifications</a>
-                            <a class="collapse-item" href="{{ route('admin_role.create') }}">Séquences</a>
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Gestion des Postes:</h6>
+                            <a class="collapse-item" href="{{ route('poste.index') }}">Liste</a>
+                            <a class="collapse-item" href="{{ route('poste.create') }}">Créer</a>
                         </div>
                     </div>
                 </li>
@@ -107,14 +96,14 @@
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#produit"
                         aria-expanded="true" aria-controls="produit">
                         <i class="fas fa-clipboard" aria-hidden="true"></i>
-                        <span>Production</span>
+                        <span>Produit</span>
                     </a>
                     <div id="produit" class="collapse" aria-labelledby="headingUtilities"
                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">{{-- 
-                            <h6 class="collapse-header">Gestion des Produits:</h6> --}}
-                            <a class="collapse-item" href="{{ route('produit.index') }}">Rapport</a>{{-- 
-                            <a class="collapse-item" href="{{ route('produit.create') }}">Créer</a> --}}
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Gestion des Produits:</h6>
+                            <a class="collapse-item" href="{{ route('produit.index') }}">Liste</a>
+                            <a class="collapse-item" href="{{ route('produit.create') }}">Créer</a>
                         </div>
                     </div>
                 </li>
@@ -123,14 +112,14 @@
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#shift"
                         aria-expanded="true" aria-controls="shift">
                         <i class="fas fa-fw fa-wrench" aria-hidden="true"></i>
-                        <span>	Stock </span>
+                        <span>	Configuration </span>
                     </a>
                     <div id="shift" class="collapse" aria-labelledby="headingUtilities"
                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">{{-- 
-                            <h6 class="collapse-header">Gestion des Shifts:</h6> --}}
-                            <a class="collapse-item" href="{{ route('shift.index') }}">Inventaire</a>{{-- 
-                            <a class="collapse-item" href="{{ route('shift.create') }}">Créer</a> --}}
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Gestion des Shifts:</h6>
+                            <a class="collapse-item" href="{{ route('shift.index') }}">Liste</a>
+                            <a class="collapse-item" href="{{ route('shift.create') }}">Créer</a>
                         </div>
                     </div>
                 </li>
@@ -142,31 +131,34 @@
                     Addons
                 </div-->
 
-                
+                <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('operateur.list') }}">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Workforce</span></a>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                        aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        <span>Opérateur</span>
+                    </a>
+                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Opérateurs gestion</h6>
+                            <a class="collapse-item" href="{{ route('operateur.list') }}">Liste</a>
+                            <a class="collapse-item" href="{{ route('create.operator') }}">Créer</a>
+                        </div>
+                    </div>
                 </li>
 
-                <!-- Nav Item - Tables -->
                 <li class="nav-item">
-                    <a class="nav-link" href="tables.html">
-                        <i class="fas fa-fw fa-table"></i>
-                        <span>Finance</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#compte"
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#production"
                         aria-expanded="true" aria-controls="production">
                         <i class="fas fa-fw fa-wrench" aria-hidden="true"></i>
-                        <span>	Mon compte </span>
+                        <span>	Production </span>
                     </a>
-                    <div id="compte" class="collapse" aria-labelledby="headingUtilities"
+                    <div id="production" class="collapse" aria-labelledby="headingUtilities"
                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">{{-- 
-                            <h6 class="collapse-header">Gestion des Productions:</h6> --}}
-                            <a class="collapse-item" href="{{ route('production.index') }}">Facturation</a>
-                            <a class="collapse-item" href="{{ route('production.create') }}">Soutien technique</a>
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Gestion des Productions:</h6>
+                            <a class="collapse-item" href="{{ route('production.index') }}">Liste</a>
+                            <a class="collapse-item" href="{{ route('production.create') }}">Créer</a>
                         </div>
                     </div>
                 </li>
@@ -213,7 +205,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light text-light bg-dark topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -339,11 +331,11 @@
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
-                                    {{-- <div class="dropdown-list-image mr-3">
+                                    <div class="dropdown-list-image mr-3">
                                         <img class="rounded-circle" src="img/undraw_profile_2.svg"
                                             alt="...">
                                         <div class="status-indicator"></div>
-                                    </div> --}}
+                                    </div>
                                     <div>
                                         <div class="text-truncate">I have the photos that you ordered last month, how
                                             would you like them sent to you?</div>
@@ -403,8 +395,8 @@
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
                                 </a>
-                                <div class="dropdown-divider"></div>{{-- data-toggle="modal" data-target="#logoutModal" --}}
-                                <a class="dropdown-item" href="{{ route('signout') }}" >
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -467,7 +459,7 @@
         </div>
     </div>
 <style>
-/*     .sidebar-dark .nav-item .nav-link {
+    .sidebar-dark .nav-item .nav-link {
         color: #121212cc !important;
         font-weight: 700;
     }
@@ -476,7 +468,7 @@
     }
     .sidebar-dark .nav-item .nav-link[data-toggle=collapse]::after {
     color: #121212cc !important;
-} */
+}
     </style>
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('asset/vendor/jquery/jquery.min.js')}}"></script>
@@ -489,12 +481,17 @@
     <script src="{{ asset('asset/js/sb-admin-2.min.js')}}"></script>
 
     <!-- Page level plugins -->
-{{--     <script src="{{ asset('asset/vendor/chart.js/Chart.min.js')}}"></script>
+    <script src="{{ asset('asset/vendor/chart.js/Chart.min.js')}}"></script>
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('asset/js/demo/chart-area-demo.js')}}"></script>
-    <script src="{{ asset('asset/js/demo/chart-pie-demo.js')}}"></script> --}}
-    @yield('javascript')
+    <script src="{{ asset('asset/js/demo/chart-pie-demo.js')}}"></script>
+    
+    <script src="{{ asset('asset/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('asset/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
+        <!-- Page level custom scripts -->
+    <script src="{{ asset('asset/js/demo/datatables-demo.js')}}"></script>
     
 
 </body>

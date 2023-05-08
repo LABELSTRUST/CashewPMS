@@ -25,16 +25,17 @@ class ObjectifController extends Controller
             if($result){
                 
                 $sequences = Sequence::get();
-                $objectifs = Objectif::all();
-                if ($objectifs) {
-                    $formatted_objectifs = $objectifs->map(function ($objectif) {
-                        $objectif->obj_date_start = Carbon::createFromFormat('Y-m-d', $objectif->obj_date_start);
-                        $objectif->obj_date_end = Carbon::createFromFormat('Y-m-d', $objectif->obj_date_end);
-                        $objectif->formatted_date = $objectif->obj_date_start->format('M-d') . " - " . $objectif->obj_date_end->format('M-d') . ", " .  $objectif->obj_date_end->year;
-                        return $objectif;
-                    });
-                    return view('objectif.index',['objectifs' => $formatted_objectifs,'sequences'=>$sequences]);
-                }
+                $objectifs = Objectif::orderBy('id','DESC')->paginate(10);
+                return view('objectif.index',['objectifs' => $objectifs,'sequences'=>$sequences]);
+                // if ($objectifs) {
+                //     $formatted_objectifs = $objectifs->map(function ($objectif) {
+                //         $objectif->obj_date_start = Carbon::createFromFormat('Y-m-d', $objectif->obj_date_start);
+                //         $objectif->obj_date_end = Carbon::createFromFormat('Y-m-d', $objectif->obj_date_end);
+                //         $objectif->formatted_date = $objectif->obj_date_start->format('M-d') . " - " . $objectif->obj_date_end->format('M-d') . ", " .  $objectif->obj_date_end->year;
+                //         return $objectif;
+                //     });
+                //     return view('objectif.index',['objectifs' => $formatted_objectifs,'sequences'=>$sequences]);
+                // }
             }else  return redirect('login');
         }else  return redirect('login');
     }
@@ -131,10 +132,20 @@ class ObjectifController extends Controller
                         'obj_remain_quantity'=>$data['qte_totale']
                     ]);
                     if ($objectif) {
-                        return redirect()->route('objectif.create')->with('message',"Enregistrer avec succès");
-                    }else return redirect()->route('objectif.create')->with('error',"Une erreur s'est produite");
+                        toastr()->success('Enregistrer avec succès!', 'Notification');
+                        return redirect()->route('objectif.index');
+                        //return redirect()->route('objectif.create');
+
+                        //return redirect()->route('objectif.create')->with('message',"Enregistrer avec succès");
+                    }else 
+                    toastr()->error('Une erreur s\'est produite!', 'Notification');
+                    return redirect()->route('objectif.create');
+                   // ->with('error',"Une erreur s'est produite");
                     
-                }else return redirect()->route('objectif.create')->with('error',"Une erreur sur le target");
+                }else
+                toastr()->error('Une erreur sur le target!', 'Notification');
+                 return redirect()->route('objectif.create');
+                 //->with('error',"Une erreur sur le target");
 
 
             }else  return redirect('login');

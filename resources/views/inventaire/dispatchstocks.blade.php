@@ -43,7 +43,7 @@
 
 <div class="row">
     
-<div class="col-lg-10" style="margin-left: 2%;">
+<div class="col-md-12" style="margin-left: 2%;">
          <div class="row" style="margin-bottom: 20px;">
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <a href="{{ URL::previous() }}" class="btn btn-lg btn-outline-info">Retour</a>
