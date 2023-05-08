@@ -80,7 +80,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">{{-- 
                             <h6 class="collapse-header">Gestion des Lignes</h6> --}}
                             <a class="collapse-item" href="{{ route('admin_operation.clientindex') }}">Clients</a>
-                            <a class="collapse-item" href="{{ route('admin_role.create') }}">Fournisseurs</a>
+                            <a class="collapse-item" href="{{ route('supplier.index') }}">Fournisseurs</a>
                         </div>
                     </div>
                 </li>

@@ -27,7 +27,23 @@ class FournisseurController extends Controller
                 if ($user) {
                     $suppliers = Fournisseur::get();
                     return view('supplier.index',compact('suppliers'));
-                }else  return redirect('login');
+                }else  {
+                    
+                    $user=$this->Admin_memberCheck();
+                    if ($user instanceof \App\Models\User) {
+                        $admin_member = $user;
+                        $suppliers = Fournisseur::get();
+                        return view('admin_operation.supplier_index',compact('suppliers','admin_member'));
+                    }else{
+                        $user=$this->verifyAdminGeneral();
+                        if ($user instanceof \App\Models\User) {
+                            $admin_member = $user;
+                            $suppliers = Fournisseur::get();
+                            return view('admin_operation.supplier_index',compact('suppliers','admin_member'));
+
+                        }else return redirect('login');
+                    }
+                }
             }
             
             

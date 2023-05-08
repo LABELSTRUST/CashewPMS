@@ -133,7 +133,7 @@
                             <label for="p2">Quantité de sac complet</label>
                             <input type="text" hidden name="conditioning_id" value="" id="stock_id">
                             <input type="number" class="form-control mb-3" min=0 name="num_bag" id="" placeholder="Nombre de sac entier" value="">
-                            <label for="">Client</label>
+                            <label for="">Order</label>
                             <select  class="form-control mb-3"  name="commande_id" id="commande_id1">
                                 <option value=""></option>
                                 @foreach ($commandes as $commande)
