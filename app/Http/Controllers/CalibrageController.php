@@ -1417,20 +1417,20 @@ return response()->json([$session]); */
         return view('calibrage.pdf',compact('calibrage','date_recep','date_time_decharge','date_charg','qr'));
     }
 
-    public function imprimer(OrigineProd $reception)
+    public function imprimer(OrigineProd $calibrage)
     {
         if (Auth::user()) {
             $user=$this->verifyOperator();
             if ($user) {
-                $date_recep = Carbon::createFromFormat('Y-m-d H:i:s', $reception->date_recep);
-                $date_time_decharge = Carbon::createFromFormat('Y-m-d H:i:s', $reception->date_time_decharge);
-                $date_charg = Carbon::createFromFormat('Y-m-d H:i:s', $reception->date_charg);
+                $date_recep = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_recep);
+                $date_time_decharge = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_time_decharge);
+                $date_charg = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_charg);
                 
-                $qr = QrCode::size(100)->generate(route('get_data_quality', $reception->id));
-                $bar_decharge = Carbon::parse($reception->date_time_decharge)->format('Ymd');
-                $bar_recharge = Carbon::parse($reception->date_charg)->format('Ymd');
+                $qr = QrCode::size(100)->generate(route('get_data_quality', $calibrage->id));
+                $bar_decharge = Carbon::parse($calibrage->date_time_decharge)->format('Ymd');
+                $bar_recharge = Carbon::parse($calibrage->date_charg)->format('Ymd');
                 
-                $local = $reception->get_Geo?->country ."- ".$reception->get_Geo?->town."- ".$reception->get_Geo?->neighborhood;
+                $local = $calibrage->get_Geo?->country ."- ".$calibrage->get_Geo?->town."- ".$calibrage->get_Geo?->neighborhood;
                 $pdf = PDF::loadView('calibrage.pdf', compact('calibrage', 'date_recep', 'date_time_decharge', 'date_charg', 'qr', 'local','bar_decharge','bar_recharge'))
                             ->setOptions([
                                 'defaultFont' => 'sans-serif',
