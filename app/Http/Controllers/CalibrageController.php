@@ -1423,8 +1423,8 @@ return response()->json([$session]); */
             $user=$this->verifyOperator();
             if ($user) {
                 $date_recep = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_recep);
-                $date_time_decharge = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_time_decharge);
-                $date_charg = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_charg);
+                $date_time_decharge = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->updated_at);
+                $date_charg = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->created_at);
                 
                 $qr = QrCode::size(100)->generate(route('get_data_quality', $calibrage->id));
                 $bar_decharge = Carbon::parse($calibrage->date_time_decharge)->format('Ymd');
