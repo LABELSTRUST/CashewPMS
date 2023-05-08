@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
 use App\Models\Assigner;
+use App\Models\Calibrage;
 use App\Models\Campaign;
 use App\Models\Classification;
 use App\Models\Client;
@@ -1469,6 +1470,7 @@ class ReceptionController extends Controller
                     $poste = Poste::where('section_id',$section_poste->id)->first();
                     //$assigner = Assigner::where('user_id',$user->id)->where('poste_id',$poste->id)->first();
                     $stocks = StockRecepT::where('receptionner',true)->where('section_id',$poste->id)->orderBy('id','DESC')->paginate(20);
+                    
                     
                     $sequence = session::all();          
                     $assigner = Assigner::where('user_id',$user->id)->where('poste_id',$poste->id)->where('sequence_id',$sequence['sequence'])->first();

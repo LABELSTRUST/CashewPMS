@@ -78,8 +78,16 @@
                                             <td>{{$stock->created_at}}</td>
                                             <td>{{$stock->net_weight}}</td>
                                             <td> {{-- --}}
+
+                                                
                                                 <a class="btn icon-btn btn-outline-info mr-2" href="{{isset($stock->id)? route('calibrage.index',[$stock->id]):"" }}"><span class="feather icon-eye"></span></a>
                                                 <a class="btn btn-info" href="{{route('processusCalibrage',[$stock->id])}}">Procéder</a>
+                                                {{-- @if ($stock->getStock->localisation==null)
+                                               <a class="btn btn-info" href="{{route('processusCalibrage',[$stock->id])}}">Procéder</a>
+                                               @else
+                                               <a class="btn btn-info" disabled style="background-color: green" href="{{route('processusCalibrage',[$stock->id])}}">Procéder</a> 
+                                               @endif --}}
+                                              
                                             </td>
                                         </tr>
                                         @endif

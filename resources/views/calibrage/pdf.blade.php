@@ -78,7 +78,7 @@
     <table class="table table-bordered" id="customers"  width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th>CashewPMS</th>
+                <th>Calibrage</th>
                 <th>{{ $date_recep->format('d-m-Y')}}</th>
                 <!--th>Salary</th-->
             </tr>
