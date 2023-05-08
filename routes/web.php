@@ -303,6 +303,10 @@ Route::get('/operateur/stock/calibre/valider', [CalibrageController::class, 'ajo
 Route::get('/operateur/show/{calibrage}', [CalibrageController::class, 'show'])->name('calibrage.show');
 Route::post('/operateur/show/controle/{calibrage}', [CalibrageController::class, 'controleQualite'])->name('calibrage.controlequalite');
 Route::get('/operateur/calibre/rapport', [CalibrageController::class, 'rapport'])->name('calibrage.rapport');
+Route::get('/operateur/calibre/fiche/{calibrage}', [CalibrageController::class, 'fiche'])->name('calibrage.fiche');
+Route::get('/pdf/calibre/fiche/{calibrage}', [CalibrageController::class, 'imprimer'])->name('imprimer.fiche_calibrage');
+
+
 Route::get('/operateur/calibre/details/{calibrage}', [CalibrageController::class, 'calibragedetail'])->name('calibrage.calibragedetail');
 Route::post('/operateur/calibre/enreg/rapport', [CalibrageController::class, 'registerRapport'])->name('calibrage.registerRapport');
 Route::get('/operateur/calibre/transfert/{calibrage}', [CalibrageController::class, 'calibrageTransfert'])->name('calibrage.calibrageTransfert');
