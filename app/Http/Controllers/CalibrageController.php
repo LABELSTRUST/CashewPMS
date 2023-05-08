@@ -2,26 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
+use Carbon\Carbon;
+use App\Models\Poste;
+use App\Models\Stock;
+use App\Models\Section;
 use App\Models\Assigner;
-use Illuminate\Support\Str;
+use App\Models\Sequence;
 use App\Models\Calibrage;
 use App\Models\Calibreuse;
-use App\Models\Classification;
-use App\Models\Conditionnement;
-use App\Models\Current_rapport_Calibrage;
-use App\Models\Depelliculage;
-use App\Models\OperatorSequence;
-use App\Models\Poste;
-use App\Models\RapportCalibrage;
-use App\Models\Section;
-use App\Models\Sequence;
-use App\Models\Stock;
+use App\Models\OrigineProd;
 use App\Models\StockRecepT;
 use App\Models\TypeCalibre;
-use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Depelliculage;
+use App\Models\Classification;
+use App\Models\Conditionnement;
+use App\Models\OperatorSequence;
+use App\Models\RapportCalibrage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Models\Current_rapport_Calibrage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CalibrageController extends Controller
 {
@@ -35,9 +38,18 @@ class CalibrageController extends Controller
         if( Auth::check()){
             $user=$this->verifyOperator();
             if ($user) {
+
+               // $origin_id = OrigineProd::where('matiere_id',$stock)->pluck('id');
+              //dd($origin_id);  
+                //$receptions = Stock::whereIn('origin_id',$origin_id)->get();
+               // $calibrage= Calibrage::find('id')->first();
+            // $origin = $calibrage->getStock?->getStock?->getOrigin?->get_Geo?->country
                 $etape_calibrage = 1;
                 
                 $calibrages = Calibrage::where('stock_id',$stock)->orderBy('id','DESC')->paginate(20);
+                 
+            // $origin = $calibrages->getStock?->getStock?->getOrigin?->get_Geo?->countr;
+            //    ( $origin);
                 return view('calibrage.index',compact('calibrages','stock','etape_calibrage'));
 
             }else return redirect('login');
@@ -1360,6 +1372,74 @@ return response()->json([$session]); */
                     //return redirect()->route('dashboard')->with('error',"Vous n'êtes pas habilité à travailler à ce poste.");
                        
             }else return redirect('login');
+        }else return redirect('login');
+    }
+
+    public function fiche(OrigineProd $calibrage)
+    {
+        if( Auth::check()){
+            $user=$this->verifyOperator();
+            if ($user) {
+                $date_recep = null;
+                
+                if ($calibrage->date_recep) {
+                    $date_recep = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_recep);
+                   
+                }
+                $date_time_decharge = null;
+                if ($calibrage->date_time_decharge) {
+                    $date_time_decharge = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_time_decharge);
+                }
+                
+                //dd($calibrage->get_Geo->country);
+                
+                $date_charg = null;
+                if ($calibrage->date_charg) {
+                    $date_charg = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_charg);
+                }
+                
+                $qr = QrCode::size(100)->generate(route('get_data_quality', $calibrage->id));
+                return view('calibrage.fiche',compact('calibrage','date_recep','date_time_decharge','date_charg', 'qr'));
+            }else return redirect('login');
+        }else return redirect('login');
+    }
+
+
+    public function monpdf()
+    {
+        $calibrage = OrigineProd::where('id',1)->first();
+        
+        $date_recep = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_recep);
+        $date_time_decharge = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_time_decharge);
+        $date_charg = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_charg);
+        
+        $qr = QrCode::size(100)->generate(route('get_data_quality', $calibrage->id));
+        return view('calibrage.pdf',compact('calibrage','date_recep','date_time_decharge','date_charg','qr'));
+    }
+
+    public function imprimer(OrigineProd $calibrage)
+    {
+        if (Auth::user()) {
+            $user=$this->verifyOperator();
+            if ($user) {
+                $date_recep = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_recep);
+                $date_time_decharge = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_time_decharge);
+                $date_charg = Carbon::createFromFormat('Y-m-d H:i:s', $calibrage->date_charg);
+                
+                $qr = QrCode::size(100)->generate(route('get_data_quality', $calibrage->id));
+                $bar_decharge = Carbon::parse($calibrage->date_time_decharge)->format('Ymd');
+                $bar_recharge = Carbon::parse($calibrage->date_charg)->format('Ymd');
+                
+                $local = $calibrage->get_Geo?->country ."- ".$calibrage->get_Geo?->town."- ".$calibrage->get_Geo?->neighborhood;
+                $pdf = PDF::loadView('calibrage.pdf', compact('calibrage', 'date_recep', 'date_time_decharge', 'date_charg', 'qr', 'local','bar_decharge','bar_recharge'))
+                            ->setOptions([
+                                'defaultFont' => 'sans-serif',
+                                'font-size' => '25px'
+                            ]);
+                //$pdf->download('fiche.pdf');
+                return $pdf->stream();
+            }else return redirect('login');
+            
         }else return redirect('login');
     }
 }

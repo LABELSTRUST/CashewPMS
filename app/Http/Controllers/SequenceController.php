@@ -26,7 +26,7 @@ class SequenceController extends Controller
         if( Auth::check()){
         $result = $this->verifyAdmin();
         if($result){
-            $sequences = Sequence::get();
+            $sequences = Sequence::orderBy('id','DESC')->paginate(10);
             /*$date = "";
             foreach ($sequences as $key => $sequence) {
                 $date = Carbon :: createFromFormat ( 'm/d/Y' , $sequence->date_start )-> format ( 'Y-m-d' ); 

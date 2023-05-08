@@ -18,7 +18,7 @@
 
 <div class="row">
     
-    <div class="col-lg-10" >
+    <div class="col-md-12" >
          <div class="row d-flex justify-content-between mb-2" >
             <div class="mb-2">
                 <a href="{{ route('matiere.create') }}" class="btn btn-lg btn-outline-info">Ajouter</a>

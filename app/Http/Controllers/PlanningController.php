@@ -42,19 +42,26 @@ class PlanningController extends Controller
                             ->distinct()
                             ->get();*/
                             //dd($objectifs);
-                $objectifs = Objectif::get();
-                if ($objectifs) {
-                    $formatted_objectifs = $objectifs->map(function ($objectif) {
-                        $objectif->obj_date_start = Carbon::createFromFormat('Y-m-d', $objectif->obj_date_start);
-                        $objectif->obj_date_end = Carbon::createFromFormat('Y-m-d', $objectif->obj_date_end);
-                        $objectif->formatted_date = $objectif->obj_date_start->format('M-d') . " - " . $objectif->obj_date_end->format('M-d') . ", " .  $objectif->obj_date_end->year;
-                        return $objectif;
-                    });
-                    //dd($formatted_objectifs);
-                    $objs = Objectif::all()->pluck('id');
-                    $sequences = Sequence::whereIn('objectif_id',$objs)->get();
-                    return view('admin.plannigs',['objectifs' => $formatted_objectifs, 'sequences'=>$sequences]);
-                }
+                $objectifs = Objectif::orderBy('id','DESC')->paginate(12);
+                $objs = Objectif::all()->pluck('id');
+                $sequences = Sequence::whereIn('objectif_id',$objs)->get();
+                // $sequences = Sequence::whereIn('objectif_id',$objs)->orderBy('id','DESC')->get();
+
+                return view('admin.plannigs',['objectifs' => $objectifs, 'sequences'=>$sequences]);
+                // if ($objectifs) {
+                //     $formatted_objectifs = $objectifs->map(function ($objectif) {
+                //         $objectif->obj_date_start = Carbon::createFromFormat('Y-m-d', $objectif->obj_date_start);
+                //         $objectif->obj_date_end = Carbon::createFromFormat('Y-m-d', $objectif->obj_date_end);
+                //         $objectif->formatted_date = $objectif->obj_date_start->format('M-d') . " - " . $objectif->obj_date_end->format('M-d') . ", " .  $objectif->obj_date_end->year;
+                //         return $objectif;
+                //     });
+                //     //dd($formatted_objectifs);
+                //     $objs = Objectif::all()->pluck('id');
+                //     $sequences = Sequence::whereIn('objectif_id',$objs)->get();
+                //     // $sequences = Sequence::whereIn('objectif_id',$objs)->orderBy('id','DESC')->get();
+
+                //     return view('admin.plannigs',['objectifs' => $formatted_objectifs, 'sequences'=>$sequences]);
+                // }
                 
             }else return redirect('login');
     

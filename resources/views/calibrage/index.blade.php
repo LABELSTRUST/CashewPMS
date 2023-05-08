@@ -88,7 +88,14 @@
                                             {{ $calibre->localisation }}
                                           </td>
                                           <td>
-                                              <a class="btn  btn-outline-info mr-2" href="{{isset($calibre->id)? route('calibrage.show',[$calibre->id]):"" }}">Contrôle qualité</a>
+
+                                            @if ($calibre->kor==null)
+                                            <a class="btn  btn-outline-info mr-2" href="{{isset($calibre->id)? route('calibrage.show',[$calibre->id]):"" }}">Contrôle qualité</a>
+                                            @else
+                                            <a class="btn icon-btn btn-outline-info mr-2"
+                                                        href="{{ isset($calibre->getStock?->getStock?->getOrigin?->get_Geo?->id) ? route('calibrage.fiche', [$calibre->getStock?->getStock?->getOrigin?->get_Geo?->id]) : '' }}"><span
+                                                            class="feather icon-eye"></span></a>  
+                                            @endif
                                               @if ($calibre->transfert)
                                                   <button class="btn btn-success">Transférer</button>
                                               @else

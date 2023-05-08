@@ -19,10 +19,7 @@ class Commande extends Model
         'client_id',
         'statut',
         'code',
-        'id_order',
-        'author_id',
-        'production',
-        'livraison'
+        'id_order'
     ];
 
     
@@ -33,10 +30,6 @@ class Commande extends Model
     public function getProduit()
     {
         return  $this->belongsTo(Produit::class,'produit_id');
-    }
-    public function getUser()
-    {
-        return  $this->belongsTo(User::class,'author_id');
     }
 
 }

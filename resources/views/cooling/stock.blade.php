@@ -84,8 +84,9 @@
                             <span class="fs-sm mr-1">s</span>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <h4 class="p-1">{{$fragilisation->total_weight}}{{$fragilisation->getSequence->getObjectif?->unit_measure}} </h4>
+                           
                             <h4 class="p-1">{{$fragilisation->getCuiseur->designation}}</h4>
+                            <h4 class="p-1">{{$fragilisation->total_weight}}{{$fragilisation->getSequence->getObjectif?->unit_measure}} </h4>
                         </div>
                         <div class="card-footer d-flex">
                         @if ($fragilisation->end_counting_cooling)
@@ -117,8 +118,9 @@
                         <span class="fs-sm mr-1">s</span>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <h4 class="p-1">{{$fragilisation->total_weight}}{{$fragilisation->getSequence->getObjectif?->unit_measure}} </h4>
+                        
                         <h4 class="p-1">{{$fragilisation->getCuiseur->designation}}</h4>
+                        <h4 class="p-1">{{$fragilisation->total_weight}}{{$fragilisation->getSequence->getObjectif?->unit_measure}} </h4>
                     </div>
                     <div class="card-footer d-flex">
                     @if ($fragilisation->end_counting_cooling)

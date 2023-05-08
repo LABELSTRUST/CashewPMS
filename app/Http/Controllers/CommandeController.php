@@ -30,56 +30,10 @@ class CommandeController extends Controller
                 if ($user instanceof \App\Models\User) {
                     $admin_member = $user;
                     $commandes = Commande::get();
-                    return view('admin_operation.commande_index',compact('commandes','admin_member'));
-                }else{
-                    $user=$this->verifyAdminGeneral();
-                    if ($user instanceof \App\Models\User) {
-                        $admin_member = $user;
-                        $commandes = Commande::get();
-                        return view('admin_operation.commande_index',compact('commandes','admin_member'));
-
-                    }else return redirect('login');
-                }
+                    return view('admin.commandes',compact('commandes','admin_member'));
+                }else return redirect('login');
             }
     
-        }else return redirect('login');
-    }
-
-    public function productionCommande(Commande $commande)
-    {
-        if( Auth::check()){
-            $result = $this->verifyAdmin();
-            
-            if($result){
-                
-                $commande = $commande->update([
-                    'production'=>true
-                ]);
-                if ($commande) {
-                    return redirect()->route('commande.index');
-                }else return redirect()->route('commande.index')->with('error',"Erreur s'est produite");
-                
-            }else {
-                $user=$this->Admin_memberCheck();
-                if ($user instanceof \App\Models\User) {
-                    $admin_member = $user;
-                    
-                   /*  $commande = $commande->update([
-                        'production'=>true
-                    ]);
-                    
-                    if ($commande) {
-                        
-                    } */return redirect()->route('commande.index');
-                }else{
-                    $user=$this->verifyAdminGeneral();
-                    if ($user instanceof \App\Models\User) {
-                        $admin_member = $user;
-                        return view('admin_operation.commande_index',compact('commandes','admin_member'));
-
-                    }else return redirect('login');
-                }
-            }
         }else return redirect('login');
     }
 
@@ -92,109 +46,8 @@ class CommandeController extends Controller
         return  $result;
     }
 
-    public function client_order(Client $client)
-    {
-        if( Auth::check()){
-            $user=$this->Admin_memberCheck();
-            if ($user instanceof \App\Models\User) {
-                $admin_member = $user;
-                $produits = Produit::get();
-                return view('admin_operation.commandecreate', compact('client','produits','admin_member'));
 
-            }else return redirect('login');
-        }else return redirect('login');
-    }
 
-    
-    public function store_client_order(Request $request)
-    {
-        if( Auth::check()){
-            $user=$this->verifyAdminGeneral();
-            if ($user instanceof \App\Models\User) {
-                    
-                $request->validate([
-                    'produit_id' => 'required',
-                    'quantity' => 'required',
-                    'date_liv' => 'required',
-                    'client_id' => 'required',
-                ]);
-                
-                $data = $request->all();
-
-                $exist = Client::where('id',$data['client_id'])->first();
-                //dd($exist);
-                if (!isset($exist)) {
-                    return redirect()->route('commande.client_order',$data['client_id'])->with('error',"Ce client n'existe pas");
-                }else{
-                    $code =  Str::random(6,'alpha_num');
-                    $existingCode = Commande::where('code', $code)->first();
-                    while ($existingCode) {
-                        $code = Str::random(6,'alpha_num');
-                        $existingCode = Commande::where('code', $code)->first();
-                    }
-                    $id_order = $this->id_order($data['client_id']);
-                    $commande = Commande::create([
-                        'produit_id'=>$data['produit_id'],
-                        'quantity'=>$data['quantity'],
-                        'date_liv'=>$data['date_liv'],
-                        'client_id'=>$data['client_id'],
-                        'code'=>$code,
-                        'id_order'=>$id_order,
-                        'author_id'=>$user->id,
-                    ]);
-                    if ($commande) {
-                        return redirect()->route('commande.client_order',$data['client_id'])->with('message',"Enregistrer avec succès");
-                    }else return redirect()->route('commande.client_order',$data['client_id'])->with('error',"Une erreur s'est produite");
-                        
-                    
-                }
-
-            }else {
-                $user=$this->Admin_memberCheck();
-                if ($user instanceof \App\Models\User) {
-                   
-                    $request->validate([
-                        'produit_id' => 'required',
-                        'quantity' => 'required',
-                        'date_liv' => 'required',
-                        'client_id' => 'required',
-                    ]);
-                    
-                    $data = $request->all();
-        
-                    $exist = Client::where('id',$data['client_id'])->first();
-                    //dd($exist);
-                    if (!isset($exist)) {
-                        return redirect('commande.client_order')->with('error',"Ce client n'existe pas");
-                    }else{
-                        $code =  Str::random(6,'alpha_num');
-                        $existingCode = Commande::where('code', $code)->first();
-                        while ($existingCode) {
-                            $code = Str::random(6,'alpha_num');
-                            $existingCode = Commande::where('code', $code)->first();
-                        }
-                        $id_order = $this->id_order($data['client_id']);
-                    
-                        $commande = Commande::create([
-                            'produit_id'=>$data['produit_id'],
-                            'quantity'=>$data['quantity'],
-                            'date_liv'=>$data['date_liv'],
-                            'client_id'=>$data['client_id'],
-                            'code'=>$code,
-                            'id_order'=>$id_order
-                        ]);
-                        if ($commande) {
-                            return redirect()->route('commande.client_order',$data['client_id'])->with('message',"Enregistrer avec succès");
-                        }else return redirect()->route('commande.client_order',$data['client_id'])->with('error',"Une erreur s'est produite");
-                            
-                        
-                    }
-        
-                }return redirect('login');
-            } 
-        
-        }else return redirect('login');
-    }
     
     public function verifyAdmin()
     {
@@ -223,7 +76,7 @@ class CommandeController extends Controller
                 $clients = Client::get();
                 $produits = Produit::get();
                 $admin_member = $user;
-                return view('admin_operation.commandecreate', compact('clients','client','produits','admin_member'));
+                return view('admin.createcommande', compact('clients','client','produits','admin_member'));
             }else return redirect('login'); 
         }
         //else return redirect('login'); 
@@ -263,19 +116,18 @@ class CommandeController extends Controller
                     $code = Str::random(6,'alpha_num');
                     $existingCode = Commande::where('code', $code)->first();
                 }
-                $id_order = $this->id_order($data['client_id']);
-               
-                $commande = Commande::create([
-                'produit_id'=>$data['produit_id'],
-                'quantity'=>$data['quantity'],
-                'date_liv'=>$data['date_liv'],
-                'client_id'=>$data['client_id'],
-                'code'=>$code,
-                'id_order'=>$id_order
-                ]);
-                if ($commande) {
-                    return redirect('admin/commande/create')->with('message',"Enregistrer avec succès");
-                }else return redirect('admin/commande/create')->with('error',"Une erreur s'est produite");
+                    $commande = Commande::create([
+                        'produit_id'=>$data['produit_id'],
+                        'quantity'=>$data['quantity'],
+                        'date_liv'=>$data['date_liv'],
+                        'client_id'=>$data['client_id'],
+                        'code'=>$code
+                    ]);
+                    if ($commande) {
+                        return redirect('admin/commande/create')->with('message',"Enregistrer avec succès");
+                    }else return redirect('admin/commande/create')->with('error',"Une erreur s'est produite");
+                    
+                
             }
 
         }else {
@@ -348,13 +200,6 @@ class CommandeController extends Controller
     public function show(Commande $commande)
     {
         //
-    }
-    
-    public function verifyAdminGeneral()
-    {
-        $magasinier = app(AuthController::class);
-        $result = $magasinier->verifyAdminGeneral();
-        return  $result;
     }
 
     /**
