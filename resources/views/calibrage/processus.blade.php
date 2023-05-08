@@ -99,7 +99,7 @@
                             <div class="card-body">
                               <h5 class="card-title">3. Stockage des noix calibrés</h5>
                               <div class="d-flex justify-content-between" id="c6">
-                                <p class="card-text">Transport des noix dans le magasin</p><button id="ajouterc4" data-toggle="modal" data-target="#c04" class="btn btn-info btn-sm btn-xs mb-1" onclick="changeColor('c5','c6')">Fait</button>
+                                <p class="card-text">Transport des noix dans le magasin</p><button  data-toggle="modal" data-target="#c04" class="btn btn-info btn-sm btn-xs mb-1" onclick="changeColor('c5','c6')">Fait</button>
                               </div>
                               {{-- <div class="d-flex justify-content-between" id="c7">
                                 <p class="card-text">Empiler les sacs de noix</p><button data-toggle="modal" data-target="#c04"  class="btn btn-info btn-sm btn-xs mb-1" >Fait</button>

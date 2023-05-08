@@ -78,7 +78,7 @@
     <table class="table table-bordered" id="customers"  width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th>CashewPMS</th>
+                <th>Calibrage</th>
                 <th>{{ $date_recep->format('d-m-Y')}}</th>
                 <!--th>Salary</th-->
             </tr>
@@ -86,18 +86,18 @@
         <tbody>
           <tr>
             <td rowspan="3">Origines  : </td>
-            <td>Pays :  {{ $reception->get_Geo?->country}}</td>
+            <td>Pays :  {{ $calibrage->get_Geo?->country}}</td>
           </tr>
           <tr>
-            <td >Villes / Communes : {{ $reception->get_Geo?->town}} </td>
+            <td >Villes / Communes : {{ $calibrage->get_Geo?->town}} </td>
           </tr>
           <tr>
-            <td >Quartier de ville / Village :  {{ $reception->get_Geo?->neighborhood}}</td>
+            <td >Quartier de ville / Village :  {{ $calibrage->get_Geo?->neighborhood}}</td>
             
           </tr>
           <tr>
             <td>Fournisseur : </td>
-            <td> {{ $reception->geSupplier?->company}}</td>
+            <td> {{ $calibrage->geSupplier?->company}}</td>
           </tr>
           <tr>
             <td>Date de déchargement : </td>
@@ -105,7 +105,7 @@
           </tr>
           <tr>
             <td>Lieu de déchargement : </td>
-            <td> {{ $reception->port_decharge}}</td>
+            <td> {{ $calibrage->port_decharge}}</td>
           </tr>
           <tr>
             <td>Date de chargement : </td>
@@ -113,35 +113,35 @@
           </tr>
           <tr>
             <td>Lot PMS : </td>
-            <td> <h2>{{ $reception->id_lot_pms}}</h2> </td>
+            <td> <h2>{{ $calibrage->id_lot_pms}}</h2> </td>
           </tr>
           <tr>
             <td>Localisation dans le Magasin : </td>
-            <td> {{ $reception->localisation}}</td>
+            <td> {{ $calibrage->localisation}}</td>
           </tr>
           <tr>
             <td>Magasinier : </td>
-            <td> {{ $reception->nom_mag }} {{-- {{ $reception->getUser?->name}} --}}</td>
+            <td> {{ $calibrage->nom_mag }} {{-- {{ $calibrage->getUser?->name}} --}}</td>
           </tr>
           <tr>
             <td>Nombre total de sacs : </td>
-            <td> {{ $reception->qte_decharge}} {{-- {!! DNS1D::getBarcodeHTML($reception->qte_decharge, 'PHARMA') !!} --}}</td>
+            <td> {{ $calibrage->qte_decharge}} {{-- {!! DNS1D::getBarcodeHTML($calibrage->qte_decharge, 'PHARMA') !!} --}}</td>
           </tr>
           {{-- <tr>
             <td>Poids brut en kg : </td>
-            <td> {{ $reception->poids_theorique}}</td>
+            <td> {{ $calibrage->poids_theorique}}</td>
           </tr> --}}
           <tr>
             <td style="height: 10%">Poids net en kilogramme : </td>
-            <td> <h2>{{ $reception->net_weight }} {!! DNS1D::getBarcodeHTML($reception->net_weight, 'PHARMA') !!}</h2></td>
+            <td> <h2>{{ $calibrage->net_weight }} {!! DNS1D::getBarcodeHTML($calibrage->net_weight, 'PHARMA') !!}</h2></td>
           </tr>
           <tr>
             <td>Contrôle qualité:</td>
-            <td><img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate(route('get_data_quality', $reception->id))) !!} "></td>
+            <td><img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate(route('get_data_quality', $calibrage->id))) !!} "></td>
           </tr>
           <tr>
             <td>Contrôleur qualité:</td>
-            <td> {{ $reception->nom_controleur }} </td>
+            <td> {{ $calibrage->nom_controleur }} </td>
           </tr>
 
           
